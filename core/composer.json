@@ -1,0 +1,73 @@
+{
+    "name": "hejiang/mall",
+    "description": "",
+    "keywords": [],
+    "homepage": "http://www.zjhejiang.com/",
+    "type": "project",
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.4.0",
+        "yiisoft/yii2": "~2.0.0",
+        "yiisoft/yii2-swiftmailer": "~2.0.0",
+        "comodojo/zip": "^2.0",
+        "kosinix/grafika": "^2.0",
+        "vlucas/phpdotenv": "^2.4",
+        
+        "luweiss/wechat": "dev-master",
+        "wi1dcard/sentry": "dev-master",
+        "wi1dcard/yii2-hejiang-storage": "dev-master",
+        "wi1dcard/yii2-hejiang-express": "dev-master",
+        "wi1dcard/yii2-hejiang-sms": "dev-master",
+        "wi1dcard/yii2-hejiang-event": "dev-master",
+        "react/socket": "~0.8.12",
+
+        "symfony/event-dispatcher": "^2.1",
+        "evenement/evenement": "^2.1"
+    },
+    "require-dev": {
+        "yiisoft/yii2-debug": "~2.0.0",
+        "yiisoft/yii2-gii": "~2.0.0",
+        "yiisoft/yii2-faker": "~2.0.0",
+        "jdorn/sql-formatter": "dev-master"
+    },
+    "config": {
+        "process-timeout": 1800
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "yii\\composer\\Installer::postCreateProject"
+        ]
+    },
+    "extra": {
+        "yii\\composer\\Installer::postCreateProject": {
+            "setPermission": [
+                {
+                    "runtime": "0777",
+                    "web/assets": "0777",
+                    "yii": "0755"
+                }
+            ],
+            "generateCookieValidationKey": [
+                "config/web.php"
+            ]
+        },
+        "asset-installer-paths": {
+            "npm-asset-library": "vendor/npm",
+            "bower-asset-library": "vendor/bower"
+        }
+    },
+    "autoload": {
+        "files": [
+            "helpers.php"
+        ],
+        "psr-4": {
+            "app\\hejiang\\" : ["hejiang/", "hejiang/responses"]
+        }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    }
+}

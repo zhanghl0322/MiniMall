@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns="https://www.chehaiyang.cn" versionCode="">
+    <application setting="false">
+        <name><![CDATA[小程序商城]]></name>
+        <identifie><![CDATA[zjhj_mall]]></identifie>
+        <version><![CDATA[03.01.032]]></version>
+        <type><![CDATA[business]]></type>
+        <ability><![CDATA[小程序商城]]></ability>
+        <description><![CDATA[小程序商城]]></description>
+        <author><![CDATA[车海洋]]></author>
+        <url><![CDATA[https://www.chehaiyang.cn]]></url>
+    </application>
+    <platform>
+        <supports>
+            <item type="wxapp"/>
+        </supports>
+    </platform>
+    <bindings>
+        <page>
+            <entry title="主页" do="/pages/index/index" state="" direct=""/>
+        </page>
+    </bindings>
+    <permissions>
+    </permissions>
+    <install><![CDATA[]]></install>
+    <uninstall><![CDATA[]]></uninstall>
+    <upgrade><![CDATA[]]></upgrade>
+</manifest>

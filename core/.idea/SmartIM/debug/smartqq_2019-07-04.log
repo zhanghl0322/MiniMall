@@ -1,0 +1,43 @@
+2019-07-04 09:27:00.613 [Thread-7] INFO  com.scienjus.smartqq.client.SmartQQApi -
+				开始获取二维码
+2019-07-04 09:27:00.732 [Thread-7] INFO  com.scienjus.smartqq.client.SmartQQApi -
+				二维码已保存在 D:\BT\xampp\htdocs\addons\zjhj_mall\core\.idea\SmartIM\smartqq.jpg 文件中，请打开手机QQ并扫描二维码
+2019-07-04 09:27:00.733 [Thread-7] DEBUG com.scienjus.smartqq.client.SmartQQApi -
+				等待扫描二维码
+2019-07-04 09:27:59.293 [Thread-7] ERROR com.scienjus.smartqq.client.SmartQQClient -
+				登录失败
+java.lang.RuntimeException: 验证二维码超时
+	at com.scienjus.smartqq.client.SmartQQApi.verifyQRCode(SmartQQApi.java:188)
+	at com.scienjus.smartqq.client.SmartQQApi.login(SmartQQApi.java:109)
+	at com.scienjus.smartqq.client.SmartQQClient.login(SmartQQClient.java:195)
+	at cn.ieclipse.smartim.actions.LoginAction$1.run(LoginAction.java:31)
+2019-07-04 15:14:13.724 [Thread-56] INFO  com.scienjus.smartqq.client.SmartQQApi -
+				开始获取二维码
+2019-07-04 15:14:13.820 [Thread-56] INFO  com.scienjus.smartqq.client.SmartQQApi -
+				二维码已保存在 D:\BT\xampp\htdocs\addons\zjhj_mall\core\.idea\SmartIM\smartqq.jpg 文件中，请打开手机QQ并扫描二维码
+2019-07-04 15:14:13.820 [Thread-56] DEBUG com.scienjus.smartqq.client.SmartQQApi -
+				等待扫描二维码
+2019-07-04 15:14:14.834 [Thread-56] INFO  com.scienjus.smartqq.client.SmartQQApi -
+				二维码已失效，尝试重新获取二维码
+2019-07-04 15:14:14.834 [Thread-56] ERROR com.scienjus.smartqq.client.SmartQQClient -
+				登录失败
+java.lang.RuntimeException: 二维码已失效
+	at com.scienjus.smartqq.client.SmartQQApi.verifyQRCode(SmartQQApi.java:184)
+	at com.scienjus.smartqq.client.SmartQQApi.login(SmartQQApi.java:109)
+	at com.scienjus.smartqq.client.SmartQQClient.login(SmartQQClient.java:195)
+	at cn.ieclipse.smartim.actions.LoginAction$1.run(LoginAction.java:31)
+2019-07-04 15:14:44.733 [Thread-60] INFO  com.scienjus.smartqq.client.SmartQQApi -
+				开始获取二维码
+2019-07-04 15:14:44.745 [Thread-60] INFO  com.scienjus.smartqq.client.SmartQQApi -
+				二维码已保存在 D:\BT\xampp\htdocs\addons\zjhj_mall\core\.idea\SmartIM\smartqq.jpg 文件中，请打开手机QQ并扫描二维码
+2019-07-04 15:14:44.745 [Thread-60] DEBUG com.scienjus.smartqq.client.SmartQQApi -
+				等待扫描二维码
+2019-07-04 15:14:45.756 [Thread-60] INFO  com.scienjus.smartqq.client.SmartQQApi -
+				二维码已失效，尝试重新获取二维码
+2019-07-04 15:14:45.756 [Thread-60] ERROR com.scienjus.smartqq.client.SmartQQClient -
+				登录失败
+java.lang.RuntimeException: 二维码已失效
+	at com.scienjus.smartqq.client.SmartQQApi.verifyQRCode(SmartQQApi.java:184)
+	at com.scienjus.smartqq.client.SmartQQApi.login(SmartQQApi.java:109)
+	at com.scienjus.smartqq.client.SmartQQClient.login(SmartQQClient.java:195)
+	at cn.ieclipse.smartim.actions.LoginAction$1.run(LoginAction.java:31)
