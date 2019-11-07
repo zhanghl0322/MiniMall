@@ -37,6 +37,7 @@ use yii\web\Controller;
 use app\models\CashWechatTplSender;
 /**
  * 检查订单过期未付款、超时自动确认收货、分销佣金发放等
+ * 后续扩展订单取消可以在这里做处理 前后端操作都会进入
  * @property \app\models\Store $store;
  * @property \app\models\Setting $share_setting;
  *
@@ -66,7 +67,8 @@ class OrderBehavior extends BaseBehavior
         //CashWechatTplSender::NonPaymentMsg();
         \Yii::warning('----订单逾期定时作业----','info');
 
-        \Yii::warning('----ORDER BEHAVIOR----');
+        \Yii::warning('----ORDER BEHAVIOR----','info');
+
         $order_behavior_running = 'order_behavior_running';
         if (\Yii::$app->cache->get($order_behavior_running)) {
             return true;
@@ -186,7 +188,7 @@ class OrderBehavior extends BaseBehavior
             ->offset(0)->limit(20)->asArray()->all();
         foreach ($order_list as $index => $value) {
             Order::updateAll(['is_sale' => 1], ['id' => $value['id']]);
-            $this->share_money($value['id']);
+            $this->share_money($value['id']);  //超过设置售后的时间、且没有售后的订单、发放分销佣金 2019年10月31日14:05:57
             $this->give_integral($value['id']);
         }
 

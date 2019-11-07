@@ -8,6 +8,7 @@
 
 namespace app\modules\api\models;
 
+use app\models\GoodsQrcode;
 use app\utils\CurlHelper;
 use app\utils\GenerateShareQrcode;
 use app\utils\GrafikaHelper;
@@ -55,7 +56,14 @@ class ShareQrcodeForm extends ApiModel
         }
         $this->user_id = $this->user ? $this->user->id : ($this->user_id ? $this->user_id : 0);
         if ($this->type == 0) {
-            return $this->goods_qrcode();
+            $goods_qrcode = GoodsQrcode::findOne(['goods_id' => $this->goods_id, 'is_delete' => 0]);
+            if ($goods_qrcode) {
+                //重新设置海报
+                return $this->goods_qrcode_1($goods_qrcode->qrcode_bg);
+            } else {
+                //默认商品海报
+                return $this->goods_qrcode();
+            };
         } elseif ($this->type == 1) {
             return $this->ms_goods_qrcode();
         } elseif ($this->type == 2) {
@@ -79,7 +87,6 @@ class ShareQrcodeForm extends ApiModel
             ];
         }
     }
-
     //商城商品海报
     public function goods_qrcode()
     {
@@ -180,7 +187,7 @@ class ShareQrcodeForm extends ApiModel
         } else {
             $this->reText($editor, $goods_qrcode, '￥' . $goods->price, 45, 30, 910, new Color('#ff4544'), $font_path, 0);
         }
-        
+
 
         //加商城名称
         $this->reText($editor, $goods_qrcode, $store->name, 20, 40, 1170, new Color('#888888'), $font_path, 0);
@@ -206,6 +213,136 @@ class ShareQrcodeForm extends ApiModel
         ];
     }
 
+
+    //商城商品海报 copy  原旧版逻辑 2019年11月7日10:58:09
+    public function goods_qrcode_1($goods_bg)
+    {
+        if (!$this->goods_id) {
+            return [
+                'code' => 1,
+                'msg' => '未知的商品'
+            ];
+        }
+
+        $goods = Goods::findOne($this->goods_id);
+        if (!$goods) {
+            return [
+                'code' => 1,
+                'msg' => '商品不存在',
+            ];
+        }
+        $store = Store::findOne($this->store_id);
+
+        //TODO 如果商品未设置推广海海报、默认拿取商品主图作为海报分享  2019年11月7日11:21:16
+        $goods_pic_url = $goods_bg;
+
+
+        $goods_pic_save_path = \Yii::$app->basePath . '/web/temp/';
+        $version = hj_core_version();
+        $goods_pic_save_name = md5("v={$version}&goods_id={$goods->id}&goods_name={$goods->name}&store_name={$store->name}&user_id={$this->user_id}&goods_pic_url={$goods_pic_url}&type=0") . '.jpg';
+
+        $pic_url = str_replace('http://', 'https://', \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/temp/' . $goods_pic_save_name);
+        if (file_exists($goods_pic_save_path . $goods_pic_save_name)) {
+            return [
+                'code' => 0,
+                'data' => [
+                    'goods_name' => $goods->name,
+                    'pic_url' => $pic_url . '?v=' . time(),
+                ],
+            ];
+        }
+
+
+        $goods_pic_path = $this->saveTempImage($goods_pic_url);
+        if (!$goods_pic_path) {
+            return [
+                'code' => 1,
+                'msg' => '获取商品海报失败：商品图片丢失',
+            ];
+        }
+
+        $goods_qrcode_dst = \Yii::$app->basePath . '/web/statics/images/goods-qrcode-dst.jpg';
+        $font_path = \Yii::$app->basePath . '/web/statics/font/st-heiti-light.ttc';
+
+        $editor = Grafika::createEditor(GrafikaHelper::getSupportEditorLib());
+        $editor->open($goods_qrcode, $goods_qrcode_dst);
+        $editor->open($goods_pic, $goods_pic_path);
+
+        //获取小程序码图片
+        if (\Yii::$app->fromAlipayApp()) {
+            $scene = "gid={$goods->id}&uid={$this->user_id}";
+        } else {
+            $scene = "gid:{$goods->id},uid:{$this->user_id}";
+        }
+        $wxapp_qrcode_file_res = $this->getQrcode($scene, 240, "pages/goods/goods");
+        if ($wxapp_qrcode_file_res['code'] == 1) {
+            unlink($goods_pic_path);
+            return [
+                'code' => 1,
+                'msg' => '获取商品海报失败：获取小程序码失败，' . $wxapp_qrcode_file_res['msg'],
+            ];
+        }
+        $wxapp_qrcode_file_path = $wxapp_qrcode_file_res['file_path'];
+        $editor->open($wxapp_qrcode, $wxapp_qrcode_file_path);
+
+        $name_size = 30;
+        $name_width = 670;
+        //商品名称处理换行
+        $name = $this->autowrap($name_size, 0, $font_path, $goods->name, $name_width, 2);
+        //加商品名称
+//        $this->reText($editor, $goods_qrcode, $name, $name_size, 40, 750, new Color('#333333'), $font_path, 0);
+
+        //裁剪商品图片
+        //$editor->crop($goods_pic, 670, 670, 'smart');
+        $editor->resizeFill($goods_pic, 670, 970);
+        //附加商品图片
+        $editor->blend($goods_qrcode, $goods_pic, 'normal', 1.0, 'top-left', 40, 40);
+
+        $price = [];
+        $attrs = json_decode($goods->attr, true);
+        foreach ($attrs as $v) {
+            if ($v['price'] > 0) {
+                $price[] = $v['price'];
+            } else {
+                $price[] = $goods->price;
+            }
+        }
+        if (max($price) > min($price)) {
+            $goods->price = min($price) . '~' . max($price);
+        } else {
+            $goods->price = min($price);
+        }
+//        //加商品价格
+//        if ($goods->is_negotiable) {
+//            $this->reText($editor, $goods_qrcode, '价格面议', 45, 30, 910, new Color('#ff4544'), $font_path, 0);
+//        } else {
+//            $this->reText($editor, $goods_qrcode, '￥' . $goods->price, 45, 30, 910, new Color('#ff4544'), $font_path, 0);
+//        }
+
+
+        //加商城名称
+        $this->reText($editor, $goods_qrcode, $store->name, 20, 40, 1170, new Color('#888888'), $font_path, 0);
+
+        //调整小程序码图片
+        $editor->resizeFit($wxapp_qrcode, 240, 240);
+        //附加小程序码图片
+        $editor->blend($goods_qrcode, $wxapp_qrcode, 'normal', 1.0, 'top-left', 470, 1040);
+
+        //保存图片
+        $editor->save($goods_qrcode, $goods_pic_save_path . $goods_pic_save_name, 'jpeg', 85);
+
+        //删除临时图片
+        unlink($goods_pic_path);
+        unlink($wxapp_qrcode_file_path);
+
+        return [
+            'code' => 0,
+            'data' => [
+                'goods_name' => $goods->name,
+                'pic_url' => $pic_url . '?v=' . time(),
+            ],
+        ];
+    }
     //秒杀商品海报
     public function ms_goods_qrcode()
     {

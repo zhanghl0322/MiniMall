@@ -54,6 +54,7 @@ use Yii;
  * @property integer $buy_member
  * @property integer $logo
  * @property integer $is_official_account
+ * @property integer $share_validity_time  //TODO 新增设置分销有效期 2019年11月5日11:46:44
  */
 class Store extends \yii\db\ActiveRecord
 {
@@ -83,7 +84,7 @@ class Store extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['admin_id', 'is_delete', 'is_recycle', 'acid', 'user_id', 'wechat_platform_id', 'wechat_app_id', 'show_customer_service', 'delivery_time', 'after_sale_time', 'use_wechat_platform_pay', 'cat_style', 'cut_thread', 'cat_goods_cols', 'over_day', 'is_offline', 'is_coupon', 'cat_goods_count', 'send_type', 'nav_count', 'integral', 'dial', 'purchase_frame', 'is_recommend', 'recommend_count', 'status', 'buy_member'], 'integer'],
+            [['admin_id', 'is_delete', 'is_recycle', 'acid', 'user_id', 'wechat_platform_id', 'wechat_app_id', 'show_customer_service', 'delivery_time', 'after_sale_time', 'use_wechat_platform_pay', 'cat_style', 'cut_thread', 'cat_goods_cols', 'over_day', 'is_offline', 'is_coupon', 'cat_goods_count', 'send_type', 'nav_count', 'integral', 'dial', 'purchase_frame', 'is_recommend', 'recommend_count', 'status', 'buy_member','share_validity_time'], 'integer'],
             [['user_id', 'name'], 'required'],
             [['home_page_module', 'address', 'member_content', 'integration', 'dial_pic'], 'string'],
             [['name', 'order_send_tpl', 'contact_tel', 'copyright', 'kdniao_mch_id', 'kdniao_api_key'], 'string', 'max' => 255],
@@ -140,6 +141,7 @@ class Store extends \yii\db\ActiveRecord
             'is_comment' => '商城评价开关：0.关闭 1.开启',
             'is_sales' => '商城商品销量开关：0.关闭 1.开启',
             'buy_member' => '购买会员',
+            'share_validity_time' => '分销有效期',
         ];
     }
     public function beforeSave($insert)

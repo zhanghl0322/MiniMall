@@ -2,28 +2,57 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16416024-8540-4510-8d45-4d932b47861f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/modules/mch/models/UserRechargeForm_1025.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/ApiService.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/GoodsQrcode.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/mch/models/ShareGoodsQrcodeForm.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/mch/views/goods/qrcode.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KdApiSearchDemo.php" beforeDir="false" afterPath="$PROJECT_DIR$/KdApiSearchDemo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Test.php" beforeDir="false" afterPath="$PROJECT_DIR$/Test.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/IntegralLog.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/IntegralLog.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TestDay2019618.html" beforeDir="false" afterPath="$PROJECT_DIR$/TestDay2019618.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/behaviors/OrderBehavior.php" beforeDir="false" afterPath="$PROJECT_DIR$/behaviors/OrderBehavior.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/OrderWarn.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/OrderWarn.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Store.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/Store.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/common/api/CommonOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/common/api/CommonOrder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/api/models/BindForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/BindForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/api/models/OrderPayDataForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/OrderPayDataForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/api/models/order/OrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/order/OrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/mch/controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/models/ShareQrcodeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/ShareQrcodeForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/models/TeamForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/TeamForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/controllers/GoodsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/controllers/GoodsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/controllers/ShareController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/controllers/ShareController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/controllers/StoreController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/controllers/StoreController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/ShareGetQrcodeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/ShareGetQrcodeForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/ShareListForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/ShareListForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/mch/models/ShareOrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/ShareOrderForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/mch/models/UserRechargeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/UserRechargeForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/StoreSettingForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/StoreSettingForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/order/OrderClerkForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/order/OrderClerkForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/views/goods/goods-edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/views/goods/goods-edit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/views/store/setting.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/views/store/setting.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.1" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.2" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.3" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.4" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.5" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/runtime/logs/info.log" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/info.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/CurlHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/utils/CurlHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/logs/info.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/15656044771.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/15656684301.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/15656688421.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/15656758981.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/15695548591.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/15695548781.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/39f1c2f1b5767263506c8ec05a065848.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/3e6a485521a1c95eaf0d7aa3661bbef5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/53ae6ce1dd7db2a60956c22e4a1172f2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/5e165f9508845b00707c6737f042293e9390a026.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/60f8622297daf53414870ba92f8e1d7a85f14733.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/68b35e24062344be67274aa71a0d4a3f0af15a2f.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/975613b82f26cf657133ada97787460ae42c20e5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/b1f4b95c5831f641741bf84ddd7342ff105c8c13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/b3591f12101da7419f24610f5e31edff584f7058.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/bf2c4d0bec384d22f14a33c3d8706fd7e98e2844.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/c6509f6994cdde227e1e1795d0e8d1fa89ec2d6d.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/c7d2928e079153f646eb0f360ba0c67a15cd7ff8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/f5cefc27d7b81ef7fb1936c346cb2920ef957c20.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/temp/f79e05b6bac6f19cd24a953d6dae710ac721520d.jpg" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,6 +75,12 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -171,10 +206,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\mch\models" />
+      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\models" />
+      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\mch\views\goods" />
       <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\utils" />
       <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core" />
-      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\api\models\order" />
-      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\mch\models\full" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -325,17 +360,14 @@
       <workItem from="1572310620961" duration="15992000" />
       <workItem from="1572399370303" duration="15339000" />
       <workItem from="1572482892912" duration="4049000" />
+      <workItem from="1572492063161" duration="12166000" />
+      <workItem from="1572569269721" duration="6887000" />
+      <workItem from="1572828553506" duration="11068000" />
+      <workItem from="1572915644716" duration="15191000" />
+      <workItem from="1573002406636" duration="12622000" />
+      <workItem from="1573090384529" duration="14586000" />
     </task>
     <servers />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />

@@ -655,6 +655,10 @@ class ShareController extends Controller
         }
     }
 
+    /**
+     * @return array|mixed
+     * B端用户获取分销码
+     */
     public function actionGetQrcode()
     {
         $form = new ShareGetQrcodeForm();

@@ -13,6 +13,7 @@ use app\models\MsGoods;
 use app\models\Option;
 use app\models\OrderDetail;
 use app\models\PtOrderDetail;
+use app\models\Store;
 use app\models\User;
 use app\models\YyGoods;
 use app\modules\api\models\BindForm;
@@ -59,7 +60,11 @@ class CommonOrder
         if (!$parentId) {
             return;
         }
-
+        $store=Store::findOne(\Yii::$app->store->id);//查询店铺设置有效期
+        //店铺不存在
+        if (!$store) {
+            return;
+        }
         // 父级用户不存在
         $parentUser = User::findOne($parentId);
         if (!$parentUser) {
@@ -76,7 +81,9 @@ class CommonOrder
             $form->condition = 1;
             $form->save();
 
-            $user->parent_user_id = $parentId;
+            $user->parent_user_id = $parentId; //该父级ID实实支付变化
+            //保护期=设置有效期天数+当前系统时间
+            $user->parent_binding_validity=time(); //设置分销保护期时间  2019年11月5日15:12:33
             $user->save();
         }
 
@@ -95,15 +102,26 @@ class CommonOrder
         if (!$parentId) {
             return;
         }
+        $store=Store::findOne(\Yii::$app->store->id);//查询店铺设置有效期
+        //店铺不存在
+        if (!$store) {
+            return;
+        }
         // 父级用户不存在
         $parentUser = User::findOne($parentId);
         if (!$parentUser) {
             return;
         }
+
         \Yii::warning('***********changeParentIdV22222***************','info');
         $user = \Yii::$app->user->identity;
-        $user->parent_id = $parentId;
-        $user->parent_user_id = $parentId;
+        //验证是否超出系统设定保护期  2019年11月6日14:15:48
+        if(time()>($parentUser->parent_binding_validity+($store->share_validity_time*86400)))
+        {
+            $user->parent_id = $parentId;
+            \Yii::warning('超出系统设定保护期、可变更系统设定人员归属','info');
+        }
+//        $user->parent_user_id = $parentId;
         $user->save();
         return $user;
     }

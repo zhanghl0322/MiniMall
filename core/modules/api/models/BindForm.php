@@ -45,7 +45,7 @@ class BindForm extends ApiModel
             ];
         }
 
-        \Yii::warning($this->parent_id.'***************parent_i****************'.$this->condition,'info');
+        \Yii::warning($this->parent_id.'***************parent_i*******PPL*********'.$this->condition,'info');
         \Yii::warning($this->user_id.'***************this is fangxiao****************'.$this->condition,'info');
 
         // 成为下线条件 0--首次点击分享链接 1--首次下单 2--首次付款

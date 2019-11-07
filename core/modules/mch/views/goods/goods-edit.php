@@ -504,7 +504,16 @@ if (!$returnUrl) {
 
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <div class="col-3 text-right">
+                                            <label class=" col-form-label">商品推广海报图</label>
+                                        </div>
+                                        <div class="col-9">
+                                            <a href="<?= $urlManager->createUrl(['mch/goods/qrcode', 'goods_id' =>$goods['id']]) ?>"
+                                               class="btn btn-sm btn-primary">设置</a>
 
+                                        </div>
+                                    </div>
                                     <div class="form-group row">
                                         <div class="col-3 text-right">
                                             <label class=" col-form-label required">售价</label>

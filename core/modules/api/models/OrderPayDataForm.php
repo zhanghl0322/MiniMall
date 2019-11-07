@@ -98,9 +98,9 @@ class OrderPayDataForm extends ApiModel
             \Yii::warning($this->parent_user_id.'***********saveParentIdsaveParentIdsaveParentIdsaveParentIdsaveParentId************'.$this->user->id,'info');
             //原分销关系绑定、支付成功 绑定、不更改模式
             $commonOrder = CommonOrder::saveParentId($this->parent_user_id);
-            \Yii::warning($this->share_parent_user_id.'***********share_parent_user_idshare_parent_user_id*************','info');
+            \Yii::warning($this->share_parent_user_id.'***********111share_parent_user_idshare_parent_user_id*************','info');
             //新分销关系、谁分销就归属于谁的下级
-//            $changeParentId = CommonOrder::changeParentId($this->share_parent_user_id);
+             $changeParentId = CommonOrder::changeParentId($this->share_parent_user_id);
 
             \Yii::warning($this->parent_user_id.'***********changeParentId************'.$this->user->id,'info');
 

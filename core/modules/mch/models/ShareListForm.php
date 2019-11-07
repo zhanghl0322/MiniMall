@@ -328,7 +328,7 @@ class ShareListForm extends MchModel
                 $query = $thirdQuery;
             }
         }
-
+        \Yii::warning("==三级代理......==".$level,'info');
         $list = $query->asArray()->all();
 
         return [

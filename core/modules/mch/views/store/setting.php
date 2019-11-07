@@ -159,6 +159,20 @@ $this->params['active_nav_group'] = 1;
                         </div>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <div class="form-group-label col-sm-2 text-right">
+                        <label class="col-form-label">有效期设置</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input class="form-control" type="number" name="share_validity_time"
+                                   value="<?= $store->share_validity_time ?>">
+                            <span class="input-group-addon">天</span>
+                        </div>
+                        <div class="text-muted fs-sm">有效期的时间，<span class="text-danger">注意：有效期内，客户在商城购买的业绩都算在绑定的分销员上！</span>
+                        </div>
+                    </div>
+                </div>
 
 
                 <div class="form-group row">

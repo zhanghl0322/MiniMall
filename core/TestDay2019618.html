@@ -10,3 +10,21 @@
 </div>
 </body>
 </html>
+
+
+<script>
+
+    $.ajax({
+        type: "POST",
+        url: "/xxxx.ashx", //一般处理程序路径
+        data: null, //参数格式（{"value1":'值1',"value2":'值2'}）
+        success: function (msg) {
+            //成功后执行
+            //....业务逻辑
+        }
+        ,
+        error: function () {
+            //ajax代码错误
+        }
+    }
+</script>

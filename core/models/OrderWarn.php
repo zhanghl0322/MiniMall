@@ -175,6 +175,7 @@ class OrderWarn extends Model
         }
 
         //消费满指定金额自动成为分销商
+        //TODO 消费指定金额 成为分销商 2019年11月1日10:04:23
         $this->autoBecomeShare($order->user_id, $order->store_id, 'STORE');
 
 

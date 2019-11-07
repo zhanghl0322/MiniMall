@@ -12,11 +12,13 @@ namespace app\modules\mch\controllers;
 use app\models\Attr;
 use app\models\AttrGroup;
 use app\models\Cat;
+use app\models\Color;
 use app\models\Goods;
 use app\models\GoodsPic;
 use app\models\MsGoods;
 use app\models\Option;
 use app\models\PtGoods;
+use app\models\GoodsQrcode;
 use app\models\YyGoods;
 use app\modules\mch\events\goods\BaseAddGoodsEvent;
 use app\modules\mch\models\CopyForm;
@@ -27,6 +29,7 @@ use app\modules\mch\models\GoodsQrcodeForm;
 use app\modules\mch\models\GoodsSearchForm;
 use app\modules\mch\models\LevelListForm;
 use app\modules\mch\models\mch\GoodsPvListForm;
+use app\modules\mch\models\ShareGoodsQrcodeForm;//TODO 新增的商品海报分销逻辑  2019年11月7日10:16:39
 use app\modules\mch\models\SetGoodsSortForm;
 use app\modules\mch\models\SetGoodsPriceForm;
 use Hejiang\Event\EventArgument;
@@ -107,8 +110,8 @@ class GoodsController extends Controller
         $form = new GoodsQrcodeForm();
         $form->attributes = \Yii::$app->request->get();
         $form->store_id = $this->store->id;
-//       $form->plugin = get_plugin_type();
-        $form->plugin =3;
+        $form->plugin = get_plugin_type();
+//        $form->plugin =3; //测试用
         if (!\Yii::$app->user->isGuest) {
             $form->user_id = \Yii::$app->user->id;
         }
@@ -732,5 +735,61 @@ class GoodsController extends Controller
             'code' => 0,
             'msg' => '修改成功'
         ];
+    }
+
+    /**
+     * @return string
+     * 设置推广海报
+     */
+    public function actionQrcode()
+    {
+
+        \Yii::warning('*********************接收传递过来的商品id*********************'.\Yii::$app->request->get('goods_id'),'info');
+        $goods_id= \Yii::$app->request->get('goods_id');
+        if(!$goods_id)
+        {
+            return [
+                'code'=>1,
+                'msg'=>'商品ID异常'
+            ];
+        }
+        $store_id = $this->store->id;
+        $qrcode = GoodsQrcode::findOne(['goods_id' => $goods_id, 'is_delete' => 0]);
+        $color = Color::find()->select('id,color')->andWhere(['is_delete' => 0])->asArray()->all();
+        if (!$qrcode) {
+            $qrcode = new GoodsQrcode();
+        }
+        if (\Yii::$app->request->isPost) {
+            $form = new ShareGoodsQrcodeForm();
+            $model = \Yii::$app->request->post('model');
+            $form->goods_id=\Yii::$app->request->get('goods_id');//TODO 测试业务是否覆盖完整 2019年11月7日10:23:51
+            $form->store_id = $store_id;
+            $form->qrcode = $qrcode;
+            $form->attributes = $model;
+            return $form->save();
+        }
+        $font_position = json_decode($qrcode->font_position, true);
+        $qrcode_position = json_decode($qrcode->qrcode_position, true);
+        $avatar_position = json_decode($qrcode->avatar_position, true);
+        $avatar_size = json_decode($qrcode->avatar_size, true);
+        $qrcode_size = json_decode($qrcode->qrcode_size, true);
+        $font_size = json_decode($qrcode->font, true);
+        $first = Color::findOne(['id' => $font_size['color']]);
+        return $this->render('qrcode', [
+            'qrcode' => $qrcode,
+            'color' => \Yii::$app->serializer->encode($color),
+            'first' => $first->id,
+            'font_c' => $first->color,
+            'avatar_w' => $avatar_size['w'],
+            'avatar_x' => $avatar_position['x'],
+            'avatar_y' => $avatar_position['y'],
+            'qrcode_w' => $qrcode_size['w'],
+            'qrcode_c' => ($qrcode_size['c'] == 'true') ? 1 : 0,
+            'qrcode_x' => $qrcode_position['x'],
+            'qrcode_y' => $qrcode_position['y'],
+            'font_x' => $font_position['x'],
+            'font_y' => $font_position['y'],
+            'font_w' => $font_size['size'],
+        ]);
     }
 }

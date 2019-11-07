@@ -411,6 +411,9 @@ class TeamForm extends ApiModel
             }
         }
         $select = "SELECT al.rebate,al.is_price {$sql} WHERE al.rebate > 0 AND al.user_id = {$this->user_id}";
+
+        \Yii::warning('***********执行查询语句分销订单总金额*************','info');
+        \Yii::warning('\n**************getOrderCount**********\n'.$select,'info');
         $rebate = \Yii::$app->db->createCommand($select)->queryAll();
         if ($rebate) {
             foreach ($rebate as $index => $value) {
@@ -745,7 +748,9 @@ class TeamForm extends ApiModel
             AND (`parent_id` > 0 OR `rebate` != 0)
             AND (`mch_id` = 0 OR (`mch_id` > 0 AND `version` >= '2.7.2'))
             AND (store_id = {$this->store->id})
+            AND (`addtime` >'1572494400') 
         )";
+        //添加订单时间过滤 2019年11月1日11:35:52
         $sql_ms = "(
             SELECT
                 'ms' AS `order_type`,

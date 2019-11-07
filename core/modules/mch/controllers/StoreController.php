@@ -13,6 +13,7 @@ use app\hejiang\ApiCode;
 use app\hejiang\cloud\CloudWxappUpload;
 use app\models\common\admin\store\CommonAppDisabled;
 use app\models\common\admin\store\CommonStoreUpload;
+use app\models\common\api\CommonOrder;
 use app\models\common\CommonDistrict;
 use app\modules\mch\models\PickLinkForm;
 use app\modules\mch\models\WxForm;
@@ -321,6 +322,7 @@ class StoreController extends Controller
      */
     public function actionSetting()
     {
+        $commonOrder = CommonOrder::saveParentId(2);
         if (\Yii::$app->request->isPost) {
             $form = new StoreSettingForm();
             $form->attributes = \Yii::$app->request->post();

@@ -179,6 +179,7 @@ class OrderClerkForm extends MchModel
             ];
         }
 
+        \Yii::warning('*****验证订单核销********','info');
         if ($order->save()) {
             $msgTpl = new ActivityMsgTpl($order->user_id, 'BOOK_CLERK');
             $msgTpl->orderClerkTplMsg($order->order_no, '订单已核销');

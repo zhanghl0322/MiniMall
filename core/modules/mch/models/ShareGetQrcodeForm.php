@@ -74,15 +74,11 @@ class ShareGetQrcodeForm extends MchModel
         $api = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token={$access_token}";
         $curl = new Curl();
         $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
-        $data = json_encode([
-            'scene' => "page_id:29,uid:{$this->user_id}",
-            'width' => 240,
-        ]);
-//        $data = json_encode([
-//            'scene' => 29,
-//            'width' => 240,
-//        ]);
-       // $data = json_encode($data);
+        $data = [
+            'scene' => "{$this->user_id}",
+            'width' => "430",
+        ];
+        $data = json_encode($data);
         \Yii::trace("GET WXAPP QRCODE:" . $data);
         $curl->post($api, $data);
         if (in_array('Content-Type: image/jpeg', $curl->response_headers)) {
