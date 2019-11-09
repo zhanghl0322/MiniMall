@@ -366,6 +366,9 @@ class OrderBehavior extends BaseBehavior
     private function share_money($id)
     {
         $order = Order::findOne($id);
+
+        \Yii::warning('********share_money查询是否其他店铺数据**********'.$order->order_no,'info');
+
         if ($order->mch_id > 0) {
             $mchPlugin = MchPlugin::findOne(['mch_id' => $order->mch_id, 'store_id' => $this->store_id]);
             if (!$mchPlugin || $mchPlugin->is_share == 0) {

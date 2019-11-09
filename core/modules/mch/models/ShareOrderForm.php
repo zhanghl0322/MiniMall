@@ -98,11 +98,12 @@ class ShareOrderForm extends MchModel
             AND (`is_recycle` = 0)
             AND (`is_show` = 1)
             AND (`parent_id` > 0 OR `rebate` != 0)
-            AND (mch_id = 0 OR (mch_id > 0 AND `version` >= '2.7.2'))
+
             AND (`addtime` >'1572494400') 
 
         ";
         //             由于2019-10-31 之前数据清空所以这里做数据过滤
+        //            AND (mch_id = 0 OR (mch_id > 0 AND `version` >= '2.7.2'))
         $sql_ms = "(
             SELECT
                 'ms' AS `order_type`,
@@ -189,10 +190,10 @@ class ShareOrderForm extends MchModel
         if($this->order_type){
             switch($this->order_type){
                 case 's':
-                    $sqlTable = '('.$sql_s . 'AND mch_id = 0)';
+                    $sqlTable = '(' . $sql_s . 'AND mch_id > 0)';
                     break;
                 case 'ds':
-                    $sqlTable = '('.$sql_s . 'AND mch_id > 0)';
+                    $sqlTable = '(' . $sql_s . 'AND mch_id > 0)';
                     break;
                 case 'ms':
                     $sqlTable = $sql_ms;

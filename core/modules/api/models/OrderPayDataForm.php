@@ -392,6 +392,7 @@ class OrderPayDataForm extends ApiModel
      */
     private function setReturnData($order)
     {
+        \Yii::warning('*************验证是否进入佣金发放*************','info');
         $form = new ShareMoneyForm();
         $form->order = $order;
         $form->order_type = 0;

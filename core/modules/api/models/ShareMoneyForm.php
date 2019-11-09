@@ -42,22 +42,22 @@ class ShareMoneyForm extends ApiModel
     {
         $setting = Setting::findOne(['store_id' => $this->order->store_id]);
         if (!$setting || $setting->level == 0) {
-            \Yii::warning('未开启分销');
+            \Yii::warning('未开启分销','info');
             return false;
         }
         if (isset($this->order->mch_id) && $this->order->mch_id > 0) {
             $mchPlugin = MchPlugin::findOne(['mch_id' => $this->order->mch_id, 'store_id' => $this->order->store_id]);
             if (!$mchPlugin || $mchPlugin->is_share == 0) {
-                \Yii::warning('总平台未给多商户开启分销');
+                \Yii::warning('总平台未给多商户开启分销','info');
                 return false;
             }
             $mchSetting = MchSetting::findOne(['mch_id' => $this->order->mch_id]);
             if (!$mchSetting) {
-                \Yii::warning('多商户未开启分销x01');
+                \Yii::warning('多商户未开启分销x01','info');
                 return false;
             }
             if ($mchSetting->is_share == 0) {
-                \Yii::warning('多商户未开启分销x02');
+                \Yii::warning('多商户未开启分销x02','info');
                 return false;
             }
         }
@@ -65,23 +65,23 @@ class ShareMoneyForm extends ApiModel
         if (isset($this->order->type) && $this->order->type == 2) {
             $bargainSetting = BargainSetting::findOne(['store_id' => $this->order->store_id]);
             if ($bargainSetting->is_share == 0) {
-                \Yii::warning('砍价商品分销未开启');
+                \Yii::warning('砍价商品分销未开启','info');
                 return false;
             }
         }
 
         $orderDetail = $this->getDetail();
         if (!$orderDetail) {
-            \Yii::warning('订单详情不存在');
+            \Yii::warning('订单详情不存在','info');
             return false;
         }
         $user = User::findOne($this->order->user_id);
         if (!$user) {
-            \Yii::warning('订单用户不存在');
+            \Yii::warning('订单用户不存在','info');
             return false;
         }
         $order = $this->order;
-
+        \Yii::warning('正常流转','info');
         $cParent1 = -1;
         $cParent2 = -1;
         $cParent3 = -1;
