@@ -48,6 +48,7 @@ class OrderController extends Controller
         $form->attributes = \Yii::$app->request->get();
         $form->attributes = \Yii::$app->request->post();
         $form->store_id = $this->store->id;
+        $form->is_full=\Yii::$app->request->get('is_full');
         $form->limit = 10;
         $data = $form->search();
 

@@ -19,7 +19,7 @@ $this->params['active_nav_group'] = 3;
 $status = Yii::$app->request->get('status');
 $is_recycle = Yii::$app->request->get('is_recycle');
 
-$is_full = Yii::$app->request->get('is_full');
+$is_full = Yii::$app->request->get('is_full');//TODO 添加满减订单导出 2019年11月12日10:55:17
 
 $user_id = Yii::$app->request->get('user_id');
 $condition = ['user_id' => $user_id, 'clerk_id' => $_GET['clerk_id'], 'shop_id' => $_GET['shop_id']];

@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="16416024-8540-4510-8d45-4d932b47861f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TestDay2019618.html" beforeDir="false" afterPath="$PROJECT_DIR$/TestDay2019618.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/OrderListForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/OrderListForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/views/order/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/views/order/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.1" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.2" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.2" afterDir="false" />
@@ -326,7 +328,7 @@
       <workItem from="1573176042840" duration="13824000" />
       <workItem from="1573262100898" duration="10030000" />
       <workItem from="1573434754168" duration="8409000" />
-      <workItem from="1573520232978" duration="621000" />
+      <workItem from="1573520232978" duration="2308000" />
     </task>
     <task id="LOCAL-00001" summary="MiniMall=&gt;调整分销加盟商-&gt;加盟商员工下层客户变更绑定关系、以及保护期内、规则的处理">
       <created>1573268327212</created>
@@ -335,7 +337,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573268327212</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="MiniMall=&gt;补充分销文件碎片">
+      <created>1573527282168</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1573527282168</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -356,7 +365,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="MiniMall=&gt;调整分销加盟商-&gt;加盟商员工下层客户变更绑定关系、以及保护期内、规则的处理" />
-    <option name="LAST_COMMIT_MESSAGE" value="MiniMall=&gt;调整分销加盟商-&gt;加盟商员工下层客户变更绑定关系、以及保护期内、规则的处理" />
+    <MESSAGE value="MiniMall=&gt;补充分销文件碎片" />
+    <option name="LAST_COMMIT_MESSAGE" value="MiniMall=&gt;补充分销文件碎片" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -46,7 +46,7 @@ class OrderListForm extends MchModel
 
     public $fields;
     public $type;
-
+    public $is_full;
     public $platform;//所属平台
 
     public function rules()
@@ -107,10 +107,14 @@ class OrderListForm extends MchModel
             case 6:
                 $query->andWhere(['o.apply_delete' => 1]);
                 break;
+            case 13:
+                #13 默认归属满减活动订单 2019年11月12日10:57:55
+                $query->andWhere(['>', 'o.full_reduction_price', 100]);
+                break;
             default:
                 break;
         }
-
+        \Yii::warning($this->status.'**********满减进入**********','info');
         if ($this->status == 5) {//已取消订单
             $query->andWhere(['or', ['o.is_cancel' => 1], ['o.is_delete' => 1]]);
         } else {
@@ -118,7 +122,10 @@ class OrderListForm extends MchModel
                 $query->andWhere(['o.is_cancel' => 0, 'o.is_delete' => 0]);
             }
         }
-
+        if ($this->is_full == 1) {//默认归属满减活动订单 2019年11月12日10:57:55
+            \Yii::warning($this->is_full.'**********满减进入**********','info');
+            $query->andWhere(['>', 'o.full_reduction_price', 0]);
+        }
         //TODO 搜索 持续优化中...
         $commonOrderSearch = new CommonOrderSearch();
         $query = $commonOrderSearch->search($query, $this);
