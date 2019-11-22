@@ -58,6 +58,7 @@ class CommonOrder
     public static function saveParentId($parentId)
     {
         if (!$parentId) {
+            \Yii::warning('验证是否无分销归属','info');
             return;
         }
         $store=Store::findOne(\Yii::$app->store->id);//查询店铺设置有效期
@@ -78,12 +79,18 @@ class CommonOrder
             $form->store_id = \Yii::$app->store->id;
             $form->user_id = \Yii::$app->user->id;
             $form->parent_id = $parentId;
+            if(\Yii::$app->user->id==$parentId)
+            {
+                //默认自购买 归属21
+                $form->parent_id = 21;//车海洋总部
+                $user->parent_id =21;
+            }
             $form->condition = 1;
             $form->save();
 
             $user->parent_user_id = $parentId; //该父级ID实实支付变化
             //保护期=设置有效期天数+当前系统时间
-            $user->parent_binding_validity=time(); //设置分销保护期时间  2019年11月5日15:12:33
+//            $user->parent_binding_validity=time(); //设置分销保护期时间  2019年11月5日15:12:33
             $user->save();
         }
 
@@ -131,21 +138,30 @@ class CommonOrder
 
                 $parent_2 = User::findOne($parent_1->parent_id); //上上级
                 \Yii::warning($parent_2->parent_id.'*******上上级父级ID有效用户存在*******' . $parent_2->nickname, 'info');
-                if ($parent_2->parent_id==0) {
+                \Yii::warning($parentId.'系统设定'.$parent_2->parent_id, 'info');
+                if ($parent_2->parent_id==0||$parent_2->parent_id>0) {
                     //验证是否超出系统设定保护期  2019年11月6日14:15:48
 //                    if (time() > ($user->parent_binding_validity + ($store->share_validity_time * 86400))) {
 //                        $user->parent_id = $parentId;
 //                        $user->parent_binding_validity = time();//重新绑定时间
 //                        \Yii::warning($parentId.'超出系统设定保护期、可变更系统设定人员归属', 'info');
 //                    }
-                     $user->parent_id = $parentId;
-                     $user->parent_binding_validity = time();//重新绑定时间
+                    \Yii::warning($parentId.'系统设定二'.$parent_2->parent_id, 'info');
+                    if (time() > ($user->parent_binding_validity + 180)) {
+                        $user->parent_id = $parentId;
+                        $user->parent_binding_validity = time();//重新绑定时间
+                        \Yii::warning($parentId.'超出系统设定保护期、可变更系统设定人员归属'.$user->parent_binding_validity, 'info');
+                    }
+//                    $user->parent_id = $parentId;
+//                    $user->parent_binding_validity = time();//重新绑定时间
+//                     $user->parent_id = $parentId;
+//                     $user->parent_binding_validity = time();//重新绑定时间
                      //PS       总店
                      //一级    泡泡龙先生
                      //二级   亮        余
                     //会员(变动层) Allon
                     //如果是总级、那么说明该用户是处于分销最底层的弱关系层可以变更关系
-                    \Yii::warning($parent_2->parent_id.'是不是总级哦', 'info');
+                    \Yii::warning($parent_2->parent_id.'是不是总级哦'.$user->parent_binding_validity, 'info');
                 }
                 else
                 {

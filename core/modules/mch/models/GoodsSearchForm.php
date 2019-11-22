@@ -132,10 +132,16 @@ class GoodsSearchForm extends MchModel
             ->offset($pagination->offset)
             ->with(['goodsPicList', 'catList1.cat', 'cat'])
             ->all();
-        \Yii::warning('----商品列表查询条件----','info');
+        \Yii::warning($pagination->offset.'----商品列表查询条件----','info');
         $goodsList = ArrayHelper::toArray($list);
         $flag = \Yii::$app->request->post('flag');
         if ($flag === Export::EXPORT) {
+            \Yii::warning($pagination->page.'----商品列表导出----'.$pagination->limit,'info');
+            $list = $query->orderBy('g.sort ASC,g.addtime DESC')
+                ->limit(($pagination->offset+$pagination->limit))
+                ->offset(1)
+                ->with(['goodsPicList', 'catList1.cat', 'cat'])
+                ->all();
             $goodsExport = new GoodsExportList();
             $goodsExport->fields = \Yii::$app->request->post('fields');
             $goodsExport->GoodsForm($list);

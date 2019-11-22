@@ -15,6 +15,7 @@ use app\models\Mch;
 use app\models\Order;
 use app\models\OrderDetail;
 use app\models\OrderRefund;
+use app\models\Share;
 use app\models\Shop;
 use app\models\User;
 use app\modules\mch\extensions\Export;
@@ -77,6 +78,9 @@ class OrderListForm extends MchModel
             ->leftJoin(['od' => OrderDetail::tableName()], 'od.order_id=o.id')
             ->leftJoin(['g' => Goods::tableName()], 'g.id=od.goods_id')
             ->leftJoin(['m' => Mch::tableName()], 'g.mch_id=m.id')
+//            ->leftJoin(['p1' => User::tableName()], 'pu.id = o.parent_id')  //TODO 关联分销返佣信息 2019年11月18日11:19:52
+//            ->leftJoin(['p2' => User::tableName()], 'p2.id = o.parent_id_1')  //TODO 关联分销返佣信息 2019年11月18日11:19:52
+//            ->leftJoin(['p3' => User::tableName()], 'p3.id = o.parent_id_2')  //TODO 关联分销返佣信息 2019年11月18日11:19:52
             ->groupBy('o.id');
 
         switch ($this->status) {
@@ -188,6 +192,29 @@ class OrderListForm extends MchModel
 
             if (isset($item['address_data'])) {
                 $item['address_data'] = \Yii::$app->serializer->decode($item['address_data']);
+            }
+
+            \Yii::warning('***订单分销ID***'.$item['parent_id'],'info');
+            if ($item['parent_id'] != 0 && $item['parent_id'] != -1) {
+                $share = User::find()->alias('u')->where(['u.id' => $item['parent_id'], 'u.store_id' => $this->store_id, 'u.is_delete' => 0])
+                    ->leftJoin(Share::tableName() . ' s', 's.user_id = u.id and s.is_delete=0')->select([
+                        'u.nickname','u.platform', 's.name', 's.mobile'
+                    ])->asArray()->one();
+                $listArray[$i]['share'] = $share;
+            }
+            if ($item['parent_id_1'] != 0 && $item['parent_id_1'] != -1) {
+                $share_1 = User::find()->alias('u')->where(['u.id' => $item['parent_id_1'], 'u.store_id' => $this->store_id, 'u.is_delete' => 0])
+                    ->leftJoin(Share::tableName() . ' s', 's.user_id = u.id and s.is_delete=0')->select([
+                        'u.nickname','u.platform', 's.name', 's.mobile'
+                    ])->asArray()->one();
+                $listArray[$i]['share_1'] = $share_1;
+            }
+            if ($item['parent_id_2'] != 0 && $item['parent_id_1'] != -1) {
+                $share_2 = User::find()->alias('u')->where(['u.id' => $item['parent_id_2'], 'u.store_id' => $this->store_id, 'u.is_delete' => 0])
+                    ->leftJoin(Share::tableName() . ' s', 's.user_id = u.id and s.is_delete=0')->select([
+                        'u.nickname','u.platform', 's.name', 's.mobile'
+                    ])->asArray()->one();
+                $listArray[$i]['share_2'] = $share_2;
             }
             $item['flag'] = 0;
         }

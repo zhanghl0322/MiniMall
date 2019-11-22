@@ -107,6 +107,10 @@ $urlPlatform = Yii::$app->requestedRoute;
         width: 10%;
         text-align: center;
     }
+    .order-tab-6 {
+        width: 10%;
+        /*text-align: center;*/
+    }
 
     .status-item.active {
         color: inherit;
@@ -174,6 +178,7 @@ $urlPlatform = Yii::$app->requestedRoute;
             <th class="order-tab-3">分摊金额</th>
             <th class="order-tab-3">满减活动</th>
             <th class="order-tab-4">订单状态</th>
+            <th class="order-tab-5">分销情况</th>
             <th class="order-tab-5">操作</th>
         </tr>
     </table>
@@ -419,6 +424,53 @@ $urlPlatform = Yii::$app->requestedRoute;
                         </div>
 
                     </td>
+                    <td class="order-tab-6">
+                        <div flex="dir:left">
+                            <?php if ($order_item['share']): ?>
+                                <div class="p-2 text-left">
+                                    <span>昵称：<?= $order_item['share']['nickname'] ?></span>
+                                    <span
+                                            class="ml-3"><?= $order_item['share']['name'] ? "姓名：" . $order_item['share']['name'] : "" ?></span>
+                                    <span
+                                            class="ml-3"><?= $order_item['share']['mobile'] ? "电话：" . $order_item['share']['mobile'] : "" ?></span>
+                                    <div class="titleColor">一级佣金：<span
+                                                style="color:red;"><?= floatval($order_item['first_price']) ?></span>元
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($order_item['share_1']) : ?>
+                                <div class="p-2 text-left">
+                                    <span>昵称：<?= $order_item['share_1']['nickname'] ?></span>
+                                    <span
+                                            class="ml-3"><?= $order_item['share_1']['name'] ? "姓名：" . $order_item['share_1']['name'] : "" ?></span>
+                                    <span
+                                            class="ml-3"><?= $order_item['share_1']['mobile'] ? "电话：" . $order_item['share_1']['mobile'] : "" ?></span>
+                                    <div class="titleColor">二级佣金：<span
+                                                style="color:red;"><?= floatval($order_item['second_price']) ?></span>元
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            <?php if ($order_item['share_2']) : ?>
+                                <div class="p-2 text-left">
+                                    <span>昵称：<?= $order_item['share_2']['nickname'] ?></span>
+                                    <span class="ml-3"
+                                          class="ml-3"><?= $order_item['share_2']['name'] ? "姓名：" . $order_item['share_2']['name'] : "" ?></span>
+                                    <span
+                                            class="ml-3"><?= $order_item['share_2']['mobile'] ? "电话：" . $order_item['share_2']['mobile'] : "" ?></span>
+                                    <div class="titleColor">三级佣金：<span
+                                                style="color:red;"><?= floatval($order_item['third_price']) ?></span>元
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php if ($order_item['rebate'] > 0) : ?>
+                            <div class="p-1 text-left">
+                                <div class="titleColor">自购返利：<span
+                                            style="color:red;"><?= floatval($order_item['rebate']) ?></span>元
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </td>
                     <td class="order-tab-5">
                         <?php if (($order_item['is_pay'] == 1 || $order_item['pay_type'] == 2) && $order_item['is_confirm'] != 1 && $order_item['apply_delete'] == 0) : ?>
                             <div>
@@ -500,6 +552,7 @@ $urlPlatform = Yii::$app->requestedRoute;
                             </div>
                         <?php endif; ?>
                     </td>
+
                 </tr>
                 <tr>
                     <td colspan="5">
