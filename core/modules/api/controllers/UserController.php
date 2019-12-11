@@ -57,8 +57,8 @@ class UserController extends Controller
     //个人中心
     public function actionIndex()
     {
-        $order_count = OrderListForm::getCountData($this->store->id, \Yii::$app->user->id);
-        $order_all_count = OrderListForm::getAllCountData($this->store->id, \Yii::$app->user->id);
+//        $order_count = OrderListForm::getCountData($this->store->id, \Yii::$app->user->id);
+//        $order_all_count = OrderListForm::getAllCountData($this->store->id, \Yii::$app->user->id);
 
         $share_setting = Setting::find()->where(['store_id' => $this->store->id])->asArray()->one();
         $parent = User::findOne(\Yii::$app->user->identity->parent_id);
@@ -118,8 +118,8 @@ class UserController extends Controller
             'code' => 0,
             'msg' => 'success',
             'data' => [
-                'order_count' => $order_count,
-                'order_all_count' => $order_all_count,
+                'order_count' => [],
+                'order_all_count' => [],
                 'show_customer_service' => $this->store->show_customer_service,
                 'contact_tel' => $this->store->contact_tel,
                 'share_setting' => $share_setting,

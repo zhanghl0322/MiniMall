@@ -52,6 +52,7 @@ class OrderSubmitForm extends OrderForm
 
     public function save()
     {
+        $t1 = microtime(true);
         \Yii::warning($this->user->id."==新订单提交Save表格FormId界面==".$this->formId.$this->user->wechat_open_id ,'info');
         if (!$this->validate()) {
             return $this->getErrorResponse();
@@ -72,8 +73,6 @@ class OrderSubmitForm extends OrderForm
                 'msg' => $e->getMessage()
             ];
         }
-
-
         $order_id_list = [];
         $level = $this->level;
         $address = (object)($this->address);
@@ -81,9 +80,9 @@ class OrderSubmitForm extends OrderForm
         $t = \Yii::$app->db->beginTransaction();
 
         $max_price_union=0;
-        foreach ($mchListData as &$mch) {
-            $max_price_union+=$mch['total_price'] ;//TODO 累计订单金额1  2019年8月28日15:45:03
-        }
+//        foreach ($mchListData as &$mch) {
+//            $max_price_union+=$mch['total_price'] ;//TODO 累计订单金额1  2019年8月28日15:45:03
+//        }
 
         foreach ($mchListData as &$mch) {
             $checkMchData = $this->checkMchData($mch);
@@ -102,14 +101,6 @@ class OrderSubmitForm extends OrderForm
             $order->order_no = $this->getOrderNo();
 
             //====================================================================
-
-            //验证优惠券是否存在 2019年8月29日18:13:39
-            if(!empty($this->use_coupon_id))
-            {
-                \Yii::warning($mch['total_price'].'===========order_picker_coupon============'.$max_price_union,'info');
-
-            }
-            \Yii::warning($mch['total_price'].'===========order_total_price============'.$max_price_union,'info');
             $order->user_coupon_id = $this->use_coupon_id;
 
             $sub_price=($mch['total_price']/$max_price_union)*$this->use_sub_price;
@@ -140,8 +131,6 @@ class OrderSubmitForm extends OrderForm
             $order->mch_id = $mch['mch_id'];
             if ($mch['mch_id'] == 0) {
                 $order->discount = $level['discount'];
-            } else {
-                $order->discount = 10;
             }
             if ($this->payment == 0) {
                 $order->pay_type = 1;//微信支付
@@ -160,7 +149,6 @@ class OrderSubmitForm extends OrderForm
                 $order->pay_type = 4;
                 $order->is_pay = 0;
             }
-            $user_copy = User::findOne(['id' =>$this->user->id]);//查询用户账户余额
             if ($mch['offline'] == 0) {
                 $order->address = $address->province . $address->city . $address->district . $address->detail;
                 $order->mobile = $address->mobile;
@@ -173,33 +161,29 @@ class OrderSubmitForm extends OrderForm
                 ], JSON_UNESCAPED_UNICODE);
                 $order->express_price = $mch['express_price'];
                 $order->total_price = $mch['total_price'] + $mch['express_price'];
-                //$order->express_price_1=$mch['total_price'] + $mch['express_price'];//TODO 记录订单真实价格  用于追单  有运费
-
             } else {
                 $order->name = $mch['offline_name'];
                 $order->mobile = $mch['offline_mobile'];
                 $order->shop_id = $mch['shop']['id'];
                 $order->total_price = $mch['total_price'];
                 $order->express_price = 0;
-               // $order->express_price_1=$mch['total_price'] ;//TODO 记录订单真实价格  用于追单 无运费
             }
-            \Yii::warning("==生成待支付余额订单==" ,'info');
-
-            //TODO  新增业务逻辑
-            if($user_copy)
-            {
-                if ($user_copy->money>0&&$user_copy->money <$order->pay_price) {
-                    //支付失败，余额不足
-                    $order->pay_desc='总订单金额：'.$order->total_price.'余额抵扣：'.$user_copy->money.'待支付款项'.round(($order->pay_price-$user_copy->money),2);
-                    \Yii::warning('总订单金额：'.$order->pay_price.'余额抵扣：'.$user_copy->money.'待支付款项'.round(($order->pay_price-$user_copy->money),2),'info');
-                }
-            }
-            \Yii::warning($this->use_activity.'===========满减活动名称============'.$payPrice,'info');
-            //TODO 判断是否使用满减活动 2019年10月8日14:18:33
-            if($this->use_discount>0)
-            {
-                $order->pay_desc=$this->use_activity;
-            }
+//
+//            //TODO  新增业务逻辑
+//            if($user_copy)
+//            {
+//                if ($user_copy->money>0&&$user_copy->money <$order->pay_price) {
+//                    //支付失败，余额不足
+//                    $order->pay_desc='总订单金额：'.$order->total_price.'余额抵扣：'.$user_copy->money.'待支付款项'.round(($order->pay_price-$user_copy->money),2);
+//                    \Yii::warning('总订单金额：'.$order->pay_price.'余额抵扣：'.$user_copy->money.'待支付款项'.round(($order->pay_price-$user_copy->money),2),'info');
+//                }
+//            }
+//            \Yii::warning($this->use_activity.'===========满减活动名称============'.$payPrice,'info');
+//            //TODO 判断是否使用满减活动 2019年10月8日14:18:33
+//            if($this->use_discount>0)
+//            {
+//                $order->pay_desc=$this->use_activity;
+//            }
 
             //TODO 记录form_id发送模板消息用到、后续向用户推送服务通知  2019年7月15日14:15:55
             FormId::addFormId([
@@ -211,43 +195,22 @@ class OrderSubmitForm extends OrderForm
                 'order_no' => $order->order_no,
             ]);
             if ($order->save()) {
-
                 // 处理订单生成之后其他相关数据   将减扣金额 传递进去
                 $orderRes = $this->insertData($mch, $order,($max_price_union-$this->use_sub_price));
                 if ($orderRes['code'] == 1) {
                     $t->rollBack();
                     return $orderRes;
                 }
-
-                $printer_order = new PinterOrder($this->store_id, $order->id, 'order', 0);
-                $printer_order->print_order();
                 $order_id_list[] = $order->id;
             } else {
                 $t->rollBack();
                 return $this->getErrorResponse($order);
             }
         }
+        $t2 = microtime(true);
+        \Yii::warning( $t1.'订单提交耗时总'.round($t2-$t1,3).'秒'.$t1,'info');
         if (count($order_id_list) > 0) {
             $t->commit();
-
-            // 任务执行延时，标识n秒后执行此任务
-            $delay_seconds = \Yii::$app->controller->store->over_day * 3600;
-//            $delay_seconds =  3600;
-            \Yii::warning("==记录任务调度执行时间间隔==".$delay_seconds ,'info');
-            foreach ($order_id_list as $item) {
-                if ($delay_seconds > 0) {
-                    \Yii::$app->task->create(OrderAutoCancel::className(), $delay_seconds, [
-                        // 任务自定义参数，选填，将在执行TaskRunnable->run()传入
-                        'order_id' => $item,
-                        'order_type' => 'STORE',
-                        'store_id' => $this->getCurrentStoreId(),
-                    ], '商城订单自动取消');
-                }
-
-                // TODO 商城订单服务通知  Allon  2019年7月15日14:57:37
-//                $wechat_tpl_meg_sender = new CashWechatTplSender($this->store->id, $cash->id, $this->wechat);
-//                $wechat_tpl_meg_sender->cashMsg();
-            }
 
             if (count($order_id_list) > 1) {//多个订单合并
                 return [
@@ -266,7 +229,6 @@ class OrderSubmitForm extends OrderForm
                     ],
                 ];
             }
-
         } else {
             $t->rollBack();
             return $this->getErrorResponse($order);
@@ -609,7 +571,8 @@ class OrderSubmitForm extends OrderForm
         }
 
         // 减去当前用户账户积分
-        if ($mch['integral'] && $mch['integral']['forehead_integral'] > 0) {
+        if(false)
+        { if ($mch['integral'] && $mch['integral']['forehead_integral'] > 0) {
             $this->user->integral -= $mch['integral']['forehead_integral'];
             if ($this->user->integral < 0) {
                 return [
@@ -628,8 +591,7 @@ class OrderSubmitForm extends OrderForm
             $register->order_id = $order->id;
             $register->save();
             $this->user->save();
-        }
-
+        }}
         // 计算商品相关
         $goods_list = $mch['goods_list'];
         $goodsPrice = 0;

@@ -109,7 +109,7 @@ class LoginForm extends ApiModel
         if (!$this->validate()) {
             return $this->errorResponse;
         }
-        $this->logger('loginloginloginloginloginloginloginlogin');
+        $this->logger('loginloginloginloginloginloginloginlogin==============='.$this->iv);
         $res = $this->getOpenid($this->code);
         $this->logger($this->code);
         if (!$res || empty($res['openid'])) {

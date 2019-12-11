@@ -194,10 +194,10 @@ class OrderSubmitPreviewForm extends OrderForm
         }
         //处理无满减情况
         if($full_reduction==0){
-            $discount_activities=[];
-            $full_cut_list=[];
-            //return new ApiResponse(1, '满减活动暂未开始', []);
-        }
+        $discount_activities=[];
+        $full_cut_list=[];
+        //return new ApiResponse(1, '满减活动暂未开始', []);
+    }
         //=========================================================
             return [
             'code' => 0,

@@ -147,7 +147,7 @@ class CommonOrder
 //                        \Yii::warning($parentId.'超出系统设定保护期、可变更系统设定人员归属', 'info');
 //                    }
                     \Yii::warning($parentId.'系统设定二'.$parent_2->parent_id, 'info');
-                    if (time() > ($user->parent_binding_validity + 180)) {
+                    if (time() > ($user->parent_binding_validity +  + ($store->share_validity_time * 86400))) {
                         $user->parent_id = $parentId;
                         $user->parent_binding_validity = time();//重新绑定时间
                         \Yii::warning($parentId.'超出系统设定保护期、可变更系统设定人员归属'.$user->parent_binding_validity, 'info');

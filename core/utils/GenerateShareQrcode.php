@@ -45,6 +45,7 @@ class GenerateShareQrcode
             ];
         }
         $api = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token={$access_token}";
+        \Yii::warning('图片路径======'.$api,'info');
         $curl = new Curl();
         $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
         $data = [

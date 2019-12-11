@@ -8,6 +8,8 @@ use yii\helpers\VarDumper;
 class Cloud
 {
     public static $api_key = 'odhjqowdja8u298yhqd9qwydasyioh230912doj238';
+//    public static $api_key = 'eb7eddd53cb7cecc16d7ca866c4a026d';
+
     public static $cloud_server_prefix = 'http://';
     public static $cloud_server_host = 'cloud.zjhejiang.com';
     //public static $cloud_server_host = 'localhost/php/cloud_zjhejiang/web';

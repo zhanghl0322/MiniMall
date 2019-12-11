@@ -23,6 +23,60 @@ class CopyForm extends MchModel
         ];
     }
 
+    public function copy1()
+    {
+        if (!$this->validate()) {
+            return $this->errorResponse;
+        }
+        if (strpos($this->url, 'item.jd')) {
+//            $id = $this->str_substr('item.jd.com/', '.html', $this->url);
+            $id = $this->preg_substr('/item.jd.[a-z]+\//', '/.html/', $this->url);
+            $data = $this->j_copy($id[0]);
+            if ($data['code'] == 1) {
+                try{
+                    $data = $this->j_copy_2($id[0]);
+                }catch(\Exception $e){
+                    return [
+                        'code'=>1,
+                        'msg'=>$e->getMessage()
+                    ];
+                }
+            }
+            return [
+                'code' => 0,
+                'msg' => 'success',
+                'data' => $data
+            ];
+        }
+        $arr = explode('?', $this->url);
+        if (count($arr) < 2) {
+            return [
+                'code' => 1,
+                'msg' => '链接错误，请检查链接'
+            ];
+        }
+
+        if (strpos($arr[0], 'taobao') || strpos($arr[0], 'tmall')) {
+//            $id = 550718798356;
+//            $id = $this->preg_substr('/&?id=/', '/&/', $arr[1]);
+            $id = $this->preg_substr('/(\?id=|&id=)/', '/&/', $this->url);
+            $data = $this->t_copy($id[0]);
+            if ($data['code'] == 1) {
+                return $data;
+            }
+            return [
+                'code' => 0,
+                'msg' => 'success',
+                'data' => $data
+            ];
+        }
+        return [
+            'code' => 1,
+            'msg' => '链接错误，请检查链接'
+        ];
+    }
+
+
     public function copy()
     {
         if (!$this->validate()) {
@@ -48,6 +102,29 @@ class CopyForm extends MchModel
                 'data' => $data
             ];
         }
+
+        //P_ADD_start
+        if (strpos($this->url, '1688.com') || is_numeric($this->url)) {
+            preg_match('/(\\d+).html/i', $this->url, $matches);
+            if (isset($matches[1])) {
+                $itemid = $matches[1];
+                $type=1;
+            }else{
+                $itemid = $this->url;
+                $type=0;
+            }
+            $data = $this->alibaba_copy($itemid,$type);
+            if ($data['code'] == 1) {
+                return $data;
+            }
+            return [
+                'code' => 0,
+                'msg' => 'success',
+                'data' => $data
+            ];
+        }
+        //P_ADD_end
+
         $arr = explode('?', $this->url);
         if (count($arr) < 2) {
             return [
@@ -353,6 +430,33 @@ class CopyForm extends MchModel
             'detail_info' => $detail_info//图文详情
         ];
     }
+
+    //P_ADD_start
+    public function alibaba_copy($id,$type)
+    {
+        $api = "http://112.74.125.57/xcx_1688_copy.php";
+        $curl = Cloud::apiGet($api, ['vid'=>$id,'type'=>$type,'host'=> \Yii::$app->request->hostName]);
+        $res = json_decode($curl->response, true);
+        if ($res && isset($res['code'])) {
+            if ($res['code'] != 0) {
+                return [
+                    'code'=>1,
+                    'msg'=>$res['msg']
+                ];
+            }
+            $html = $res['data'];
+            $coding = mb_detect_encoding($html, array("ASCII", 'UTF-8', "GB2312", "GBK", 'BIG5', 'ISO-8859-1'));
+            $html = mb_convert_encoding($html, 'UTF-8', $coding);
+            $html = json_decode($html, true);
+            return self::data($html);
+        } else {
+            return [
+                'code'=>1,
+                'msg'=>'操作失败，请重试'
+            ];
+        }
+    }
+    //P_ADD_end
 
     /**
      * @param $list //规格列表

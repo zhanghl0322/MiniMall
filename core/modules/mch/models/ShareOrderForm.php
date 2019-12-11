@@ -99,7 +99,7 @@ class ShareOrderForm extends MchModel
             AND (`is_show` = 1)
             AND (`parent_id` > 0 OR `rebate` != 0)
 
-            AND (`addtime` >'1572494400') 
+            AND (`addtime` >'1575600836') 
 
         ";
         //             由于2019-10-31 之前数据清空所以这里做数据过滤

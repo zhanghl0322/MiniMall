@@ -111,10 +111,11 @@ class GoodsController extends Controller
         $form->attributes = \Yii::$app->request->get();
         $form->store_id = $this->store->id;
         $form->plugin = get_plugin_type();
-//        $form->plugin =3; //测试用
+        $form->plugin =4; //测试用
         if (!\Yii::$app->user->isGuest) {
             $form->user_id = \Yii::$app->user->id;
         }
+        $form->search1();
         return $form->search();
     }
 

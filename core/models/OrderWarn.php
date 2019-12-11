@@ -90,25 +90,25 @@ class OrderWarn extends Model
             }
             $order = $this->order;
             // 后台订单提醒
-            OrderMessage::set($order->id, $order->store_id, $this->order_type, 0);
-            \Yii::warning('is_sms:' . $is_sms . 'is_mail:' . $is_mail . 'is_print:' . $is_print);
-            // 短信发送
-            if ($is_sms == 1) {
-                \Yii::warning('is_sms:' . $is_sms);
-                Sms::send($order->store_id, $order->order_no);
-            }
-            // 邮件发送
-            if ($is_mail == 1) {
-                \Yii::warning('is_mail:' . $is_mail);
-                $mail = new SendMail($order->store_id, $order->id, $this->order_type);
-                $mail->send();
-            }
-            // 订单打印
-            if ($is_print == 1) {
-                \Yii::warning('is_print:' . $is_print);
-                $printer_order = new PinterOrder($order->store_id, $order->id, 'pay', $this->order_type);
-                $res = $printer_order->print_order();
-            }
+//            OrderMessage::set($order->id, $order->store_id, $this->order_type, 0);
+//            \Yii::warning('is_sms:' . $is_sms . 'is_mail:' . $is_mail . 'is_print:' . $is_print);
+//            // 短信发送
+//            if ($is_sms == 1) {
+//                \Yii::warning('is_sms:' . $is_sms);
+//                Sms::send($order->store_id, $order->order_no);
+//            }
+//            // 邮件发送
+//            if ($is_mail == 1) {
+//                \Yii::warning('is_mail:' . $is_mail);
+//                $mail = new SendMail($order->store_id, $order->id, $this->order_type);
+//                $mail->send();
+//            }
+//            // 订单打印
+//            if ($is_print == 1) {
+//                \Yii::warning('is_print:' . $is_print);
+//                $printer_order = new PinterOrder($order->store_id, $order->id, 'pay', $this->order_type);
+//                $res = $printer_order->print_order();
+//            }
             // 向商户发送模板消息
             if (isset($this->order->mch_id) && $this->order->mch_id) {
                 $this->tplMsgToMch();
@@ -119,6 +119,8 @@ class OrderWarn extends Model
             $wechatAccessToken = $this->wechat->getAccessToken();
             $res = CommonShoppingList::buyList($wechatAccessToken, $this->order, $this->order_type);
             \Yii::warning("==支付完成==".$this->order_refund_no,'info');
+            $t2=microtime(true); //获取程序1，结束的时间
+            \Yii::warning("==获取程序1结束的时间==".$t2,'info');
 
         } catch (\Exception $e) {
             \Yii::error('line->>>' . $e->getLine());
@@ -148,10 +150,10 @@ class OrderWarn extends Model
 
         $this->store_id = $order->store_id;
         //发送模板消息
-        if ($order->pay_type == 1 || $order->pay_type == 3) {
-            $wechat_tpl_meg_sender = new WechatTplMsgSender($order->store_id, $order->id, $this->wechat);
-            $wechat_tpl_meg_sender->payMsg();
-        }
+//        if ($order->pay_type == 1 || $order->pay_type == 3) {
+//            $wechat_tpl_meg_sender = new WechatTplMsgSender($order->store_id, $order->id, $this->wechat);
+//            $wechat_tpl_meg_sender->payMsg();
+//        }
 
         // 首次付款，绑定上下级
         $user = User::findOne($order->user_id);
@@ -176,20 +178,22 @@ class OrderWarn extends Model
 
         //消费满指定金额自动成为分销商
         //TODO 消费指定金额 成为分销商 2019年11月1日10:04:23
-        $this->autoBecomeShare($order->user_id, $order->store_id, 'STORE');
+//        $this->autoBecomeShare($order->user_id, $order->store_id, 'STORE');
 
 
         \Yii::warning($order->user_id . '******************购买任意商品自动成为分销商autoBuyGood****************' . $order->id, 'info');
         // 购买指定或任意商品自动成为分销商
-        $this->autoBuyGood($order->user_id, $order->store_id, $order->id);
+//        $this->autoBuyGood($order->user_id, $order->store_id, $order->id);
         //首页购买提示
-        $this->buyData($order->order_no, $order->store_id, 1);
-        if (in_array($this->order->pay_type, [1, 3])) {
-            //支付成功赠送优惠券
-            $this->paySendCoupon($order->store_id, $order->user_id);
-            //支付成功赠送卡券
-            $this->paySendCard($order->store_id, $order->user_id, $order->id);
-        }
+//        $this->buyData($order->order_no, $order->store_id, 1);
+//        if (in_array($this->order->pay_type, [1, 3])) {
+//            //支付成功赠送优惠券
+//            $this->paySendCoupon($order->store_id, $order->user_id);
+//            //支付成功赠送卡券
+//            $this->paySendCard($order->store_id, $order->user_id, $order->id);
+//        }
+        $t2=microtime(true); //获取程序1，结束的时间
+        \Yii::warning("==获取程序1结束的时间222222==".$t2,'info');
         return true;
     }
 

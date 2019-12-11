@@ -58,7 +58,7 @@ class Coupon extends \yii\db\ActiveRecord
             [['store_id', 'discount_type', 'expire_type', 'expire_day', 'begin_time', 'end_time', 'addtime', 'type','is_delete', 'total_count', 'is_join', 'sort','appoint_type','is_integral','integral','total_num','user_num','num'], 'integer'],
             [['min_price', 'sub_price', 'discount','price'], 'number'],
             [['name','cat_id_list','goods_id_list'], 'string', 'max' => 255],
-            [['desc', 'pic_url'], 'string', 'max' => 2000],
+            [['desc', 'pic_url','coupon_bg_url'], 'string', 'max' => 2000],
             [['begin_time', 'end_time'], 'integer', 'max' => 2000000000],
             [['rule'], 'string', 'max' => 1000],
         ];
@@ -75,6 +75,7 @@ class Coupon extends \yii\db\ActiveRecord
             'name' => '优惠券名称',
             'desc' => 'Desc',
             'pic_url' => 'Pic Url',
+            'coupon_bg_url' => '优惠券bg图',
             'discount_type' => '优惠券类型：1=折扣，2=满减',
             'min_price' => '最低消费金额',
             'sub_price' => '优惠金额',

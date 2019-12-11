@@ -49,6 +49,9 @@ class GoodsQrcodeForm extends MchModel
         } else if ($this->plugin == 3) {
             $page = 'pages/user/user';
         }
+        else if ($this->plugin == 4) {
+            $page = 'pages/join-share-qrcode/join-share-qrcode';
+        }
         $list = [];
         $wx = $model->wechat("gid:{$goods->id},uid:-1", 430, $page);
         if ($wx['code'] == 0) {
@@ -69,6 +72,55 @@ class GoodsQrcodeForm extends MchModel
             $pic_url_my = str_replace('http://', 'http://', \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/temp/' . $goods_qrcode_url_my);
             $list['my'] = $pic_url_my . '?v=' . time();
         }
+        return [
+            'code' => 0,
+            'data' => $list,
+        ];
+    }
+
+    public function search1()
+    {
+        $goods_pic_save_path = \Yii::$app->basePath . '/web/temp/';
+        $goods_pic_save_name_wx =  'shareCode1.jpg';
+        $goods_qrcode_path_wx = $goods_pic_save_path . $goods_pic_save_name_wx;
+        $model = new GenerateShareQrcode();
+        $page = 'pages/join-share-qrcode/join-share-qrcode';
+        $wx = $model->wechat("gid:-1,uid:-1", 430, $page);
+        \Yii::warning('微信返回图片路径======'.$wx['code'],'info');
+        $fp = fopen($goods_qrcode_path_wx, 'w');
+        fwrite($fp, file_get_contents($wx['file_path']));
+        fclose($fp);
+        $goods_qrcode_url_wx = trim(strrchr($goods_qrcode_path_wx, '/'), '/');
+        $pic_url_wx = str_replace('http://', 'http://', \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/temp/' . $goods_qrcode_url_wx);
+        \Yii::warning('图片路径======'.$pic_url_wx,'info');
+    }
+
+    public function search2()
+    {
+        $goods = Goods::findOne($this->goods_id);
+        if (!$goods) {
+            return [
+                'code' => 1,
+                'msg' => '商品不存在',
+            ];
+        }
+        $model = new GenerateShareQrcode();
+        $goods_pic_save_path = \Yii::$app->basePath . '/web/temp/';
+        $goods_pic_save_name_wx =  'shareCode.jpg';
+        $goods_qrcode_path_wx = $goods_pic_save_path . $goods_pic_save_name_wx;
+//        $page = "pages/join-share/join-share";
+        $page = 'pages/shareJoin/shareJoin';
+        \Yii::warning('图片路径AA','info');
+        $list = [];
+        $wx = $model->wechat("gid:-1,uid:-1", 430, $page);
+        \Yii::warning('图片路径BBB','info');
+        $fp = fopen($goods_qrcode_path_wx, 'w');
+        fwrite($fp, file_get_contents($wx['file_path']));
+        fclose($fp);
+        $goods_qrcode_url_wx = trim(strrchr($goods_qrcode_path_wx, '/'), '/');
+        $pic_url_wx = str_replace('http://', 'http://', \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/temp/' . $goods_qrcode_url_wx);
+        $list['wx'] = $pic_url_wx . '?v=' . time();
+        \Yii::warning('图片路径'.$pic_url_wx,'info');
         return [
             'code' => 0,
             'data' => $list,

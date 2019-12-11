@@ -9,6 +9,7 @@
 namespace app\modules\api\models;
 
 use app\models\common\CommonGoods;
+use app\models\Coupon;
 use app\models\DiscountActivities;
 use app\models\Level;
 use app\models\Option;
@@ -58,11 +59,11 @@ class GoodsForm extends ApiModel
 
         \Yii::warning($this->user_id.'=================用户ID=====================','info');
         //TODO 由于授权9月1号之后 调整无痕浏览  2019年9月19日10:45:43
-        if (!empty($this->user_id)) {
-            //TODO 执行商品浏览记录 存储过程 2019年9月6日08:40:52
-            $command = \Yii::$app->db->createCommand("CALL sp_user_browsehistories('{$this->user_id}','{$goods->id}')");
-            $command->execute();
-        }
+//        if (!empty($this->user_id)) {
+//            //TODO 执行商品浏览记录 存储过程 2019年9月6日08:40:52
+//            $command = \Yii::$app->db->createCommand("CALL sp_user_browsehistories('{$this->user_id}','{$goods->id}')");
+//            $command->execute();
+//        }
         //===============================================================================
         $mch = null;
         if ($goods->mch_id) {
@@ -163,6 +164,18 @@ class GoodsForm extends ApiModel
             $is_join_full_reduction=true;//是否满减商品
         }
 
+
+        //新增商品底部优惠券领取展示 过滤未过期  2019年12月9日14:37:09
+        //*****************************************************************************
+        $coupon_list = Coupon::find()->where([ 'is_delete' => 0])->andWhere(['>=','end_time',time()])->andWhere(['<=','begin_time',time()]) ->orderBy('sort ASC')->all();
+        //->andWhere(['>=','end_time',time()])->andWhere(['<=','begin_time',time()])
+        $new_coupon_list=[];
+        foreach ($coupon_list as $key => $coupon_item) {
+            if (in_array($goods->id, json_decode($coupon_item['goods_id_list']))||count(json_decode($coupon_item['goods_id_list']))==0) {
+                $new_coupon_list[$key] = $coupon_item;
+            }
+        }
+        //*********************************End********************************************
         $data = [
             'id' => $goods->id,
             'pic_list' => $pic_list,
@@ -190,7 +203,8 @@ class GoodsForm extends ApiModel
             'is_level' => $res['is_level'],
             'is_member_price' => $isMemberPrice,
             'best_good_list' => $query_goods_list,
-            'is_join_full_reduction'=>$is_join_full_reduction//是否加入满减
+            'is_join_full_reduction'=>$is_join_full_reduction,//是否加入满减
+            'new_coupon_list' => $new_coupon_list,
         ];
 
         return new ApiResponse(0, 'success', $data);

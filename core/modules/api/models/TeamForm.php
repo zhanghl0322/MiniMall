@@ -752,7 +752,7 @@ class TeamForm extends ApiModel
             AND (`parent_id` > 0 OR `rebate` != 0)
             AND (`mch_id` = 0 OR (`mch_id` > 0 AND `version` >= '2.7.2'))
             AND (store_id = {$this->store->id})
-            AND (`addtime` >'1572494400') 
+            AND (`addtime` >'1575600836') 
         )";
         //添加订单时间过滤 2019年11月1日11:35:52
         $sql_ms = "(

@@ -31,7 +31,7 @@ class OrderListForm extends ApiModel
         return [
             [['page', 'limit', 'status',], 'integer'],
             [['page',], 'default', 'value' => 1],
-            [['limit',], 'default', 'value' => 20],
+            [['limit',], 'default', 'value' => 5],
             [['order_id'],'trim']
         ];
     }
@@ -43,115 +43,49 @@ class OrderListForm extends ApiModel
         if (!$this->validate()) {
             return $this->errorResponse;
         }
-        $query = Order::find()->where([
-            'is_delete' => 0,
-            'store_id' => $this->store_id,
-            'user_id' => $this->user_id,
-            'is_cancel' => 0
-        ]);
-        $sql_where='WHERE 1=1 AND user_id='.$this->user_id;
+        $query='';
+        $sql_where='WHERE  user_id='.$this->user_id;
         if ($this->status == 0) {//待付款
-            $query->andWhere([
-                'is_pay' => 0,
-            ]);
+
             $sql_where='WHERE is_pay=0 AND user_id='.$this->user_id;
         }
         if ($this->status == 1) {//待发货
-            $query->andWhere([
-                'is_send' => 0,
-            ])->andWhere(['or', ['is_pay' => 1], ['pay_type' => 2]]);
+
             $sql_where='WHERE is_send=0 and is_pay=1  AND user_id='.$this->user_id;
         }
         if ($this->status == 2) {//待收货
-            $query->andWhere([
-                'is_send' => 1,
-                'is_confirm' => 0,
-            ]);
+
             $sql_where='WHERE is_send=1 and is_confirm=0  AND user_id='.$this->user_id;
         }
         if ($this->status == 3) {//已完成
-            $query->andWhere([
-                'is_confirm' => 1,
-            ]);
+
             $sql_where='WHERE is_confirm=1 AND user_id='.$this->user_id;
         }
         //TODO 新增视图并单查询
-        $sql="SELECT  * FROM v_order_list {$sql_where} ORDER BY id DESC";
+//        $sql="SELECT  * FROM v_order_list {$sql_where} ORDER BY id DESC";
+        $page=($this->page - 1)*$this->limit;
+        $pageSize= $this->limit;
+        $sql="SELECT * FROM (SELECT  * FROM v_order_list {$sql_where} ORDER BY id DESC
+) AS order_list LIMIT {$page},{$pageSize}";
         $order_list = \Yii::$app->db->createCommand($sql)->queryAll();
         if ($this->status == 4) {//售后订单
             return $this->getRefundList();
         }
-        $query->andWhere(['is_recycle' => 0]);
-        $count = $query->count();
-        $pagination = new Pagination(['totalCount' => $count, 'page' => $this->page - 1, 'pageSize' => $this->limit]);
+//        $query->andWhere(['is_recycle' => 0]);
+//        $count = $query->count();
+//        $pagination = new Pagination(['totalCount' => $count, 'page' => $this->page - 1, 'pageSize' => $this->limit]);
         /* @var Order[] $list */
-        $list = $query->limit($pagination->limit)->offset($pagination->offset)->orderBy('addtime DESC')->all();
+//        $list = $query->limit($pagination->limit)->offset($pagination->offset)->orderBy('addtime DESC')->all();
         $new_list = [];
-        foreach ($list as $order) {
-            $order_detail_list = OrderDetail::findAll(['order_id' => $order->id, 'is_delete' => 0]);
-            $goods_list = [];
-            foreach ($order_detail_list as $order_detail) {
-                $goods = Goods::findOne($order_detail->goods_id);
-                if (!$goods) {
-                    continue;
-                }
-                $goods_pic = isset($order_detail->pic) ? $order_detail->pic ?: $goods->getGoodsPic(0)->pic_url : $goods->getGoodsPic(0)->pic_url;
-                $goods_list[] = (object)[
-                    'goods_id' => $goods->id,
-                    'goods_pic' => $goods_pic,
-//                    'goods_pic' => $goods->getGoodsPic(0)->pic_url,
-                    'goods_name' => $goods->name,
-                    'num' => $order_detail->num,
-                    'price' => $order_detail->total_price,
-                    'attr_list' => json_decode($order_detail->attr),
-                ];
-            }
-            $qrcode = null;
-            if ($order->mch_id) {
-                $mch = Mch::findOne($order->mch_id);
-                $mch = [
-                    'id' => $mch->id,
-                    'name' => $mch->name,
-                    'logo' => $mch->logo,
-                ];
-            } else {
-                $mch = [
-                    'id' => 0,
-                    'name' => '平台自营',
-                    'logo' => '',
-                ];
-            }
-            $orderRefund = OrderRefund::find()->where(['store_id' => $order->store_id, 'order_id' => $order->id])->exists();
-            $new_list[] = (object)[
-                'order_id' => $order->id,
-                'order_no' => $order->order_no,
-                'addtime' => date('Y-m-d H:i', $order->addtime),
-                'goods_list' => $goods_list,
-                'total_price' => $order->total_price,
-                'pay_price' => $order->pay_price,
-                'is_pay' => $order->is_pay,
-                'is_send' => $order->is_send,
-                'is_confirm' => $order->is_confirm,
-                'is_comment' => $order->is_comment,
-                'apply_delete' => $order->apply_delete,
-                'is_offline' => $order->is_offline,
-                'qrcode' => $qrcode,
-                'offline_qrcode' => $order->offline_qrcode,
-                'express' => $order->express,
-                'mch' => $mch,
-                'pay_type' => $order->pay_type,
-                'refund' => $orderRefund,
-                'currency' => $order->currency
-            ];
-        }
-        $pay_type_list = OrderData::getPayType($this->store_id, array(), ['huodao']);
 
+//        $pay_type_list = OrderData::getPayType($this->store_id, array(), ['huodao']);
+        $row=$this->page*$this->limit;
         $new_all_list = [];
         for ($i = 0; $i < count($order_list); $i++) {
             $order_id_query = $order_list[$i]['id'];
             $goods_all_list = [];
-//            \Yii::warning('循环数据单据=====>' . $order_id_query, 'info');
-            $order_detail_all_list_Arry = \Yii::$app->db->createCommand("SELECT  * FROM v_order_detail_list  where order_id={$order_id_query} and ordertype='{$order_list[$i]['ordertype']}' ")->queryAll();
+//            $order_detail_all_list_Arry = \Yii::$app->db->createCommand("SELECT  * FROM v_order_detail_list  where order_id={$order_id_query} and ordertype='{$order_list[$i]['ordertype']}' ")->queryAll();
+            $order_detail_all_list_Arry = \Yii::$app->db->createCommand("SELECT  * FROM v_order_detail_list  where order_id={$order_id_query} and ordertype='{$order_list[$i]['ordertype']}' LIMIT {$row} ")->queryAll();
             // TODO 输出参数定义
             foreach ($order_detail_all_list_Arry as $order_detail_all) {
                 //TODO 输出视图拼单
@@ -181,13 +115,8 @@ class OrderListForm extends ApiModel
                 'apply_delete' =>intval( $order_list[$i]['apply_delete']),
                 'is_offline' => 0,
                 'order_type' => $order_list[$i]['ordertype'],
-//                'qrcode' => $qrcode,
-                // 'offline_qrcode' => $order->offline_qrcode,
                 'express' =>$order_list[$i]['express'],
-//                'mch' => $mch,
                 'pay_type' =>intval($order_list[$i]['pay_type']),
-//                'refund' => $orderRefund,
-//                'currency' => $order->currency
             ];
         }
         return [
@@ -195,12 +124,12 @@ class OrderListForm extends ApiModel
             'msg' => 'success',
             'data' => [
                 'row_all_count' => count($order_list),//统计不同类型全部单数量
-                'row_count' => $count,
-                'page_count' => $pagination->pageCount,
-                'list' => $new_list,
-                'pay_type_list' => $pay_type_list,
+//                'row_count' => $count,
+//                'page_count' => $pagination->pageCount,
+                //'list' => $new_list,
+//                'pay_type_list' => $pay_type_list,
                 'order_list' => $new_all_list,//TODO 返回全部订单 含（秒杀-拼团-正常单 合并）
-                'order_count' => $count
+                'order_count' => 10
             ],
         ];
     }

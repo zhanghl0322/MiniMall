@@ -35,6 +35,7 @@ class CouponEditForm extends MchModel
     public $appoint_type;
     public $goods_id_list;
     public $rule;
+    public $coupon_bg_url;
 
     public function rules()
     {

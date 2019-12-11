@@ -98,6 +98,45 @@ $this->params['active_nav_group'] = 7;
                 </div>
                 <div class="form-group row">
                     <div class="form-group-label col-3 text-right">
+                        <label class="col-form-label required">优惠券背景图</label>
+                    </div>
+                    <div class="col-9">
+                        <div class="upload-group short-row">
+                            <div class="input-group">
+                                <input class="form-control file-input" name="model[cover_pic]"
+                                       value="<?= $model->coupon_bg_url ?>">
+                                <span class="input-group-btn">
+                                        <a class="btn btn-secondary upload-file" href="javascript:"
+                                           data-toggle="tooltip"
+                                           data-placement="bottom" title="上传文件">
+                                            <span class="iconfont icon-cloudupload"></span>
+                                        </a>
+                                    </span>
+                                <span class="input-group-btn">
+                                        <a class="btn btn-secondary select-file" href="javascript:"
+                                           data-toggle="tooltip"
+                                           data-placement="bottom" title="从文件库选择">
+                                            <span class="iconfont icon-viewmodule"></span>
+                                        </a>
+                                    </span>
+                                <span class="input-group-btn">
+                                        <a class="btn btn-secondary delete-file" href="javascript:"
+                                           data-toggle="tooltip"
+                                           data-placement="bottom" title="删除文件">
+                                            <span class="iconfont icon-close"></span>
+                                        </a>
+                                    </span>
+                            </div>
+                            <div class="upload-preview text-center upload-preview">
+                                <span class="upload-preview-tip">325&times;325</span>
+                                <img class="upload-preview-img" src="<?= $model->coupon_bg_url ?>">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="form-group-label col-3 text-right">
                         <label class=" col-form-label required">最低消费金额（元）</label>
                     </div>
                     <div class="col-9">

@@ -2,19 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16416024-8540-4510-8d45-4d932b47861f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/api/models/OrderListForm20191129优化.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/api/models/OrderPayDataForm20191202.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hejiang/Cloud.php" beforeDir="false" afterPath="$PROJECT_DIR$/hejiang/Cloud.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Coupon.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/Coupon.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/OrderWarn.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/OrderWarn.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/UserCenterForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/UserCenterForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/common/api/CommonOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/common/api/CommonOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/models/GoodsForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/GoodsForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/models/LoginForm - 副本.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/LoginForm - 副本.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/models/OrderListForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/OrderListForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/models/OrderPayDataForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/OrderPayDataForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/api/models/TeamForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/TeamForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/models/order/OrderSubmitForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/order/OrderSubmitForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/api/models/order/OrderSubmitPreviewForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/order/OrderSubmitPreviewForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/mch/models/GoodsSearchForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/GoodsSearchForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/mch/models/OrderListForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/OrderListForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/mch/views/order/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/views/order/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/controllers/GoodsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/controllers/GoodsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/CopyForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/CopyForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/CouponEditForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/CouponEditForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/GoodsQrcodeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/GoodsQrcodeForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/ShareOrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/ShareOrderForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/views/coupon/edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/views/coupon/edit.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.1" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.2" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.3" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.4" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.5" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/GenerateShareQrcode.php" beforeDir="false" afterPath="$PROJECT_DIR$/utils/GenerateShareQrcode.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/raw.log" beforeDir="false" afterPath="$PROJECT_DIR$/web/raw.log" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -28,6 +46,25 @@
     <execution>
       <executable />
     </execution>
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+    </expand>
+    <select />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -45,6 +82,7 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/symfony/css-selector" />
@@ -157,22 +195,23 @@
   <component name="ProjectId" id="1SBRMjs9D9CLDsqMMoKBb9psOfi" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/modules/mch/models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/modules/api/models" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editing.templates" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\api\models" />
       <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\mch\models" />
       <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\models" />
       <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\mch\views\goods" />
       <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\utils" />
-      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -185,6 +224,16 @@
           <option name="name" value="StatusDashboardGroupingRule" />
         </RuleState>
       </list>
+    </option>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="allServicesViewState">
+      <serviceView>
+        <treeState>
+          <expand />
+          <select />
+        </treeState>
+      </serviceView>
     </option>
   </component>
   <component name="SvnConfiguration">
@@ -341,6 +390,20 @@
       <workItem from="1574211948569" duration="1313000" />
       <workItem from="1574214983986" duration="1997000" />
       <workItem from="1574308844451" duration="9219000" />
+      <workItem from="1574388677695" duration="2469000" />
+      <workItem from="1574642977525" duration="601000" />
+      <workItem from="1574841462967" duration="3295000" />
+      <workItem from="1574903380878" duration="2866000" />
+      <workItem from="1574910469415" duration="9727000" />
+      <workItem from="1574989813842" duration="19111000" />
+      <workItem from="1575248364697" duration="18304000" />
+      <workItem from="1575365918054" duration="2619000" />
+      <workItem from="1575422101887" duration="8921000" />
+      <workItem from="1575509220717" duration="7791000" />
+      <workItem from="1575595327807" duration="25194000" />
+      <workItem from="1575853232543" duration="8379000" />
+      <workItem from="1575939754473" duration="14024000" />
+      <workItem from="1576027822934" duration="2571000" />
     </task>
     <task id="LOCAL-00001" summary="MiniMall=&gt;调整分销加盟商-&gt;加盟商员工下层客户变更绑定关系、以及保护期内、规则的处理">
       <created>1573268327212</created>
@@ -363,11 +426,28 @@
       <option name="project" value="LOCAL" />
       <updated>1573529066374</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="MiniMall=&gt;补充V1版本分销功能所有文件">
+      <created>1574388776801</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1574388776801</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -386,15 +466,21 @@
     <MESSAGE value="MiniMall=&gt;调整分销加盟商-&gt;加盟商员工下层客户变更绑定关系、以及保护期内、规则的处理" />
     <MESSAGE value="MiniMall=&gt;补充分销文件碎片" />
     <MESSAGE value="MiniMall=&gt;补充订单管理-&gt;满减订单-&gt;Excel导出、以及列表数据过滤展示" />
-    <option name="LAST_COMMIT_MESSAGE" value="MiniMall=&gt;补充订单管理-&gt;满减订单-&gt;Excel导出、以及列表数据过滤展示" />
+    <MESSAGE value="MiniMall=&gt;补充V1版本分销功能所有文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="MiniMall=&gt;补充V1版本分销功能所有文件" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/modules/api/models/order/OrderSubmitForm.php</url>
-          <line>283</line>
+          <line>245</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/modules/api/models/OrderPayDataForm.php</url>
+          <line>226</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

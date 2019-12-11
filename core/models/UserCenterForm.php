@@ -62,6 +62,8 @@ class UserCenterForm extends Model
         }
 
         $arr = ['/pages/web/authorization/authorization'];
+
+        $u = User::findOne($this->user_id);
         foreach ($data['menus'] as $i => $menu) {
             if ($menu['id'] == 'dianhua') {
                 $data['menus'][$i]['tel'] = $store->contact_tel;
@@ -69,6 +71,11 @@ class UserCenterForm extends Model
 
             // 去除支付宝不需要的菜单
             if ($this->_platform === 'my' && in_array($menu['url'], $arr)) {
+                unset($data['menus'][$i]);
+            }
+            //移除不是分销将隐藏分销入口 2019年12月6日17:42:02
+            if($u->is_distributor==0&&$menu['id'] == 'fenxiao')
+            {
                 unset($data['menus'][$i]);
             }
         }
