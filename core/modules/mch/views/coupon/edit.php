@@ -96,6 +96,7 @@ $this->params['active_nav_group'] = 7;
                         </label>
                     </div>
                 </div>
+<!--                优惠券背景图区域-->
                 <div class="form-group row">
                     <div class="form-group-label col-3 text-right">
                         <label class="col-form-label required">优惠券背景图</label>
@@ -103,7 +104,7 @@ $this->params['active_nav_group'] = 7;
                     <div class="col-9">
                         <div class="upload-group short-row">
                             <div class="input-group">
-                                <input class="form-control file-input" name="model[cover_pic]"
+                                <input class="form-control file-input" name="coupon_bg_url"
                                        value="<?= $model->coupon_bg_url ?>">
                                 <span class="input-group-btn">
                                         <a class="btn btn-secondary upload-file" href="javascript:"

@@ -53,6 +53,7 @@ class CouponEditForm extends MchModel
             [['cat_id_list', 'goods_id_list'], 'safe'],
             [['appoint_type'], 'integer', 'min' => 0],
             [['rule'], 'string', 'max' => 1000],
+            [['coupon_bg_url'], 'string', 'max' => 2000],
         ];
     }
 
@@ -75,6 +76,7 @@ class CouponEditForm extends MchModel
             'appoint_type' => '指定类别或商品',
             'goods_id_list' => '指定商品id',
             'rule' => '使用说明',
+            'coupon_bg_url'=>'优惠券背景图',
         ];
     }
 
@@ -97,6 +99,8 @@ class CouponEditForm extends MchModel
         $this->coupon->sort = $this->sort;
         $this->coupon->rule = $this->rule;
         $this->coupon->appoint_type = $this->appoint_type;
+         $this->coupon->coupon_bg_url =$this->coupon_bg_url;//TODO 新增优惠券背景图 2019年12月11日13:57:17
+        \Yii::warning('记录背景'.$this->coupon_bg_url,'info');
         $old_cat_id_list = json_decode($this->coupon->cat_id_list);
 
         if($this->coupon->begin_time>2000000000 || $this->coupon->end_time>2000000000){

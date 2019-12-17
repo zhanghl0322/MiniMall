@@ -13,6 +13,7 @@ use Yii;
  * @property string $name
  * @property string $desc
  * @property string $pic_url
+ * @property string $coupon_bg_url
  * @property integer $discount_type
  * @property string $min_price
  * @property string $sub_price
@@ -75,7 +76,7 @@ class Coupon extends \yii\db\ActiveRecord
             'name' => '优惠券名称',
             'desc' => 'Desc',
             'pic_url' => 'Pic Url',
-            'coupon_bg_url' => '优惠券bg图',
+            'coupon_bg_url' => '优惠券bg图',//TODO 新增优惠券背景图 2019年12月11日13:57:41
             'discount_type' => '优惠券类型：1=折扣，2=满减',
             'min_price' => '最低消费金额',
             'sub_price' => '优惠金额',

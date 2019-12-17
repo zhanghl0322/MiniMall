@@ -2,29 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="16416024-8540-4510-8d45-4d932b47861f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/api/models/OrderListForm20191129优化.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/modules/api/models/OrderPayDataForm20191202.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hejiang/Cloud.php" beforeDir="false" afterPath="$PROJECT_DIR$/hejiang/Cloud.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/Coupon.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/Coupon.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/OrderWarn.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/OrderWarn.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/UserCenterForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/UserCenterForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/common/api/CommonOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/common/api/CommonOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/api/controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/controllers/UserController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/api/models/GoodsForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/GoodsForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/api/models/LoginForm - 副本.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/LoginForm - 副本.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/api/models/OrderListForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/OrderListForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/api/models/OrderPayDataForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/OrderPayDataForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/api/models/TeamForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/TeamForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/api/models/order/OrderSubmitForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/order/OrderSubmitForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/api/models/order/OrderSubmitPreviewForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/order/OrderSubmitPreviewForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/mch/controllers/GoodsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/controllers/GoodsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/mch/models/CopyForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/CopyForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/controllers/CouponController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/controllers/CouponController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/mch/models/CouponEditForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/CouponEditForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/mch/models/GoodsQrcodeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/GoodsQrcodeForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/mch/models/ShareOrderForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/ShareOrderForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/mch/views/coupon/edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/views/coupon/edit.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.1" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.1" afterDir="false" />
@@ -32,8 +14,6 @@
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.3" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.4" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.5" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/GenerateShareQrcode.php" beforeDir="false" afterPath="$PROJECT_DIR$/utils/GenerateShareQrcode.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/raw.log" beforeDir="false" afterPath="$PROJECT_DIR$/web/raw.log" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -403,7 +383,9 @@
       <workItem from="1575595327807" duration="25194000" />
       <workItem from="1575853232543" duration="8379000" />
       <workItem from="1575939754473" duration="14024000" />
-      <workItem from="1576027822934" duration="2571000" />
+      <workItem from="1576027822934" duration="10254000" />
+      <workItem from="1576144276343" duration="735000" />
+      <workItem from="1576546640376" duration="227000" />
     </task>
     <task id="LOCAL-00001" summary="MiniMall=&gt;调整分销加盟商-&gt;加盟商员工下层客户变更绑定关系、以及保护期内、规则的处理">
       <created>1573268327212</created>
@@ -433,7 +415,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574388776801</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="MiniMall=&gt;调整商品详情页优惠券输出">
+      <created>1576035641643</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1576035641643</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -467,7 +456,8 @@
     <MESSAGE value="MiniMall=&gt;补充分销文件碎片" />
     <MESSAGE value="MiniMall=&gt;补充订单管理-&gt;满减订单-&gt;Excel导出、以及列表数据过滤展示" />
     <MESSAGE value="MiniMall=&gt;补充V1版本分销功能所有文件" />
-    <option name="LAST_COMMIT_MESSAGE" value="MiniMall=&gt;补充V1版本分销功能所有文件" />
+    <MESSAGE value="MiniMall=&gt;调整商品详情页优惠券输出" />
+    <option name="LAST_COMMIT_MESSAGE" value="MiniMall=&gt;调整商品详情页优惠券输出" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

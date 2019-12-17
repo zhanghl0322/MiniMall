@@ -47,7 +47,7 @@ class CouponController extends Controller
             $form = new CouponEditForm();
             $form->attributes = \Yii::$app->request->post();
             $form->store_id = $this->store->id;
-            $form->coupon = $model;
+            $form->coupon=$model;
             return $form->save();
         } else {
             foreach ($model as $index => $value) {

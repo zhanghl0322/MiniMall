@@ -167,7 +167,7 @@ class GoodsForm extends ApiModel
 
         //新增商品底部优惠券领取展示 过滤未过期  2019年12月9日14:37:09
         //*****************************************************************************
-        $coupon_list = Coupon::find()->where([ 'is_delete' => 0])->andWhere(['>=','end_time',time()])->andWhere(['<=','begin_time',time()]) ->orderBy('sort ASC')->all();
+        $coupon_list = Coupon::find()->where([ 'is_delete' => 0])->andWhere(['<>','coupon_bg_url',''])->andWhere(['is not','coupon_bg_url',null]) ->orderBy('sort ASC')->all();
         //->andWhere(['>=','end_time',time()])->andWhere(['<=','begin_time',time()])
         $new_coupon_list=[];
         foreach ($coupon_list as $key => $coupon_item) {
