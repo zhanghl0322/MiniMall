@@ -173,7 +173,21 @@ $this->params['active_nav_group'] = 1;
                         </div>
                     </div>
                 </div>
-
+<!--                分销佣金起始返佣金额-->
+                <div class="form-group row">
+                    <div class="form-group-label col-sm-2 text-right">
+                        <label class="col-form-label">返佣最低消费金额</label>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="input-group">
+                            <input class="form-control" type="number" name="share_min_price"
+                                   value="<?= $store->share_min_price ?>">
+                            <span class="input-group-addon">元</span>
+                        </div>
+                        <div class="text-muted fs-sm">分销返佣最低消费金额，<span class="text-danger">注意：返佣最低消费金额，客户在商城购买的订单金额超过最低消费金额才有佣金返还，0元，为不限制！</span>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="form-group row">
                     <div class="form-group-label col-sm-2 text-right">

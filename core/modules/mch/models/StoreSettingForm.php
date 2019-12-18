@@ -36,7 +36,7 @@ class StoreSettingForm extends MchModel
     public $delivery_time;
     public $after_sale_time;
     public $share_validity_time; //TODO 接收表单提交过来的有效期值 2019年11月5日14:23:30
-
+    public  $share_min_price; //TODO 分销返佣最低消费金额 2019年12月17日09:58:11
     public $kdniao_mch_id;
     public $kdniao_api_key;
 
@@ -94,7 +94,8 @@ class StoreSettingForm extends MchModel
             [['over_day'], 'number', 'min' => 0],
             [['delivery_time', 'after_sale_time', 'over_day','share_validity_time',], 'integer', 'min' => 0,'max' => 200000000],
             [['integral'],'integer','min' => 1, 'max' => 99999999],
-            [['name'], 'string', 'max' => 255]
+            [['name'], 'string', 'max' => 255],
+            [['share_min_price'], 'required'],
         ];
     }
 
@@ -118,6 +119,7 @@ class StoreSettingForm extends MchModel
             'delivery_time' => '收货时间',
             'after_sale_time' => '售后时间',
             'share_validity_time'=> '有效期',
+            'share_min_price'=>'返佣最低消费金额',
             'use_wechat_platform_pay' => '是否使用公众号支付：0=否，1=是',
             'kdniao_mch_id' => '快递鸟商户号',
             'kdniao_api_key' => '快递鸟api key',
@@ -169,6 +171,7 @@ class StoreSettingForm extends MchModel
         $store->delivery_time = $this->delivery_time;
         $store->after_sale_time = $this->after_sale_time;
         $store->share_validity_time = $this->share_validity_time;//分销有效期 2019年11月5日14:25:24
+        $store->share_min_price= $this->share_min_price;
         $store->kdniao_mch_id = $this->kdniao_mch_id;
         $store->kdniao_api_key = $this->kdniao_api_key;
         $store->cat_style = $this->cat_style;

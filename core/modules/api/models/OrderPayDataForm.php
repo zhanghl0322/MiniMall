@@ -18,6 +18,7 @@ use app\models\Order;
 use app\models\OrderDetail;
 use app\models\OrderUnion;
 use app\models\OrderWarn;
+use app\models\Store;
 use app\models\User;
 use luweiss\wechat\Wechat;
 
@@ -53,8 +54,6 @@ class OrderPayDataForm extends ApiModel
 
     public function search()
     {
-        $t1=microtime(true); //获取程序1，开始的时间
-        \Yii::warning("==获取程序1开始的时间1111==".$t1,'info');
         $this->wechat = $this->getWechat();
         if (!$this->validate()) {
             return $this->errorResponse;
@@ -69,9 +68,6 @@ class OrderPayDataForm extends ApiModel
         }
 
 
-
-//        记录执行时间开始
-        $t1111 = microtime(true);
         if ($this->order_id) { //单个订单付款
             $this->order = Order::findOne([
                 'store_id' => $this->store_id,
@@ -98,21 +94,49 @@ class OrderPayDataForm extends ApiModel
                     'msg' => $e->getMessage()
                 ];
             }
+
+
+            \Yii::warning($this->parent_user_id.'***********saveParentIdsaveParentIdsaveParentIdsaveParentIdsaveParentId************'.$this->user->id,'info');
             //原分销关系绑定、支付成功 绑定、不更改模式
-            //$commonOrder = CommonOrder::saveParentId($this->parent_user_id);
+            $commonOrder = CommonOrder::saveParentId($this->parent_user_id);
+            \Yii::warning($this->share_parent_user_id.'***********111share_parent_user_idshare_parent_user_id*************','info');
+            //新分销关系、谁分销就归属于谁的下级
+            $changeParentId = CommonOrder::changeParentId($this->share_parent_user_id);
+
+            \Yii::warning($this->parent_user_id.'***********changeParentId************'.$this->user->id,'info');
+
             $goods_names = '';
             $goods_list = OrderDetail::find()->alias('od')->leftJoin(['g' => Goods::tableName()], 'g.id=od.goods_id')->where([
                 'od.order_id' => $this->order->id,
                 'od.is_delete' => 0,
             ])->select('g.name')->asArray()->all();
             foreach ($goods_list as $goods) {
-                \Yii::warning("==第一个循环==".$goods['name'],'info');
                 $goods_names .= $goods['name'] . ';';
             }
             $goods_names = mb_substr($goods_names, 0, 32, 'utf-8');
 
             //TODO 账户余额是否大于订单总金额 Allon  2019年8月19日09:59:51
             $user_copy = User::findOne(['id' =>$this->order->user_id]);
+
+
+
+            $store1 = Store::findOne([
+                'id' => $this->store_id
+            ]);
+
+            //TODO 如果超过有效保护期、将无佣金  2019年11月22日11:49:18
+            if (time() < ($user_copy->parent_binding_validity + ($store1->share_validity_time * 86400))) {
+                //如果存在设置返佣最低消费金额
+                if ($store1->share_min_price == 0) {
+                    //验证最低消费金额是否无限制
+                    $this->setReturnData($this->order);
+                } else {
+                    if ($this->order->pay_price > $store1->share_min_price) {
+                        //验证是否最低消费金额小于订单支付金额
+                        $this->setReturnData($this->order);
+                    }
+                }
+            }
 
             $this->order->order_union_id = 0;
             $this->order->save();
@@ -127,8 +151,13 @@ class OrderPayDataForm extends ApiModel
                 $is_balance=false;
             }
 
+            //=============================CRM单据传送 单个订单付款========================================
+            \Yii::warning("CRM传递信息====wechat_open_id=>{$user_copy->wechat_open_id},wechat_union_id=>{$user_copy->wechat_union_id},order_no=>{$this->order->order_no},id=>{$this->order->id},pay_price=>{$this->order->pay_price}",'info');
+            $this->payWriteBack_add($user_copy->wechat_open_id,$user_copy->wechat_union_id,$this->order->order_no,$this->order->id,$this->order->pay_price);
+            // $this->logger($this->order->pay_price);
+            //=====================================================================
 
-
+            \Yii::warning("==订单总金额是否大于账户总金额==".$is_balance ,'info');
             //TODO 如果 BALANCE_PAY 账户余额支付、并且账户余额不足支付该笔订单金额、常用微信支付余款  pay_price  =订单无扣减情况下全额
             if ($this->pay_type == 'WECHAT_PAY'||($this->pay_type == 'BALANCE_PAY'&&$user_copy->money <$this->order->pay_price)) {
 
@@ -146,8 +175,6 @@ class OrderPayDataForm extends ApiModel
                     $form->order_id = $this->order->id;
                     $form->order_type = 0;
                     $form->notify();
-                    $t2=microtime(true); //获取程序1，结束的时间
-                    \Yii::warning("==获取程序1结束的时间==".$t2,'info');
 
                     return [
                         'code' => 0,
@@ -156,6 +183,11 @@ class OrderPayDataForm extends ApiModel
                             'price' => 0
                         ]
                     ];
+                }
+
+                // 支付宝
+                if (\Yii::$app->fromAlipayApp()) {
+                    return $this->alipayUnifiedOrder($goods_names);
                 }
 
                 $res = $this->unifiedOrder($goods_names);
@@ -181,8 +213,11 @@ class OrderPayDataForm extends ApiModel
                     'signType' => 'MD5',
                 ];
                 $pay_data['paySign'] = $this->wechat->pay->makeSign($pay_data);
-                $t2222 = microtime(true);
-                \Yii::warning( $t2222.'耗时总'.round($t2222-$t1111,3).'秒'.$t1111,'info');
+
+//                //TODO 冻结账户余额  Allon 2019年8月19日18:26:55
+//                $user_copy->money=0;
+//                $user_copy->save();
+
                 return [
                     'code' => 0,
                     'msg' => 'success',
@@ -263,7 +298,26 @@ class OrderPayDataForm extends ApiModel
                 $order_list[] = $order;
                 $total_pay_price += doubleval($order->pay_price);
 
-//                $this->setReturnData($order);
+                //$this->setReturnData($order);
+                $user1 = User::findOne(['id' =>$this->order->user_id]);
+                $store1 = Store::findOne([
+                    'id' => $this->store_id
+                ]);
+
+                //TODO 如果超过有效保护期、将无佣金  2019年11月22日11:49:18
+                if (time() < ($user1->parent_binding_validity + ($store1->share_validity_time * 86400))) {
+                    //如果存在设置返佣最低消费金额
+                    if ($store1->share_min_price == 0) {
+                        //验证最低消费金额是否无限制
+                        $this->setReturnData($this->order);
+                    } else {
+                        if ($this->order->pay_price > $store1->share_min_price) {
+                            //验证是否最低消费金额小于订单支付金额
+                            $this->setReturnData($this->order);
+                        }
+                    }
+                }
+
             }
             //微信支付
             //TODO:1.0 调用微信支付记录商品信息 2019-05-15 17点39分
@@ -272,8 +326,6 @@ class OrderPayDataForm extends ApiModel
                 return;
             }
 
-            $t3=microtime(true); //获取程序2，开始的时间
-            \Yii::warning("==获取程序2开始的时间==".$t3,'info');
             if ($this->pay_type == 'WECHAT_PAY'||($this->pay_type == 'BALANCE_PAY'&&$user->money <$total_pay_price)) {
 
                 \Yii::warning($total_pay_price."==记录支付==",'info');
@@ -300,6 +352,10 @@ class OrderPayDataForm extends ApiModel
                     'signType' => 'MD5',
                 ];
                 $pay_data['paySign'] = $this->wechat->pay->makeSign($pay_data);
+
+//                //TODO 冻结账户余额  Allon 2019年8月19日18:26:55
+//                $user->money=0;
+//                $user->save();
                 return [
                     'code' => 0,
                     'msg' => 'success',
@@ -340,11 +396,7 @@ class OrderPayDataForm extends ApiModel
                     'data' => '',
                 ];
             }
-            $t4=microtime(true); //获取程序2，开始的时间
-            \Yii::warning("==获取程序2开结束的时间==".$t4,'info');
         }
-        $t2222 = microtime(true);
-        \Yii::warning( '耗时'.round($t2222-$t1111,3).'秒','info');
     }
 
     /**
@@ -397,6 +449,7 @@ class OrderPayDataForm extends ApiModel
             $total_pay_price =round( $this->order->pay_price,2);
         }
 
+        \Yii::warning(round($total_pay_price,2)."==unifiedOrderunifiedOrder==".$total_pay_price ,'info');
         $res = $this->wechat->pay->unifiedOrder([
             'body' => $goods_names,
             'out_trade_no' => $this->order->order_no,
