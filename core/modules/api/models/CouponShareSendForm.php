@@ -75,9 +75,11 @@ class CouponShareSendForm extends ApiModel
             ];
         }
         $coupon['type'] = 2;
+        //->exists()
         $user_coupon = UserCoupon::find()
-            ->where(['store_id'=>$this->store_id,'coupon_id'=>$this->id,'user_id'=>$this->user_id,'type'=>2,'is_delete'=>0])->exists();
-        if ($user_coupon) {
+            ->where(['store_id'=>$this->store_id,'coupon_id'=>$this->id,'user_id'=>$this->user_id,'type'=>2,'is_delete'=>0])->count();
+        //调整优惠券由设置限制数量控制领取券张数  2019年12月18日10:19:41
+        if ($user_coupon==$coupon->limit_num) {
             $coupon_list[] = $coupon;
             $form = new CouponListForm();
             $form->store_id = $this->store_id;

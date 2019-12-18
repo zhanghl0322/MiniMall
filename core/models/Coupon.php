@@ -34,6 +34,7 @@ use Yii;
  * @property integer $integral
  * @property integer $total_num
  * @property integer $user_num
+ * @property integer $limit_num
  * @property integer $price
  * @property string $rule
  */
@@ -56,7 +57,7 @@ class Coupon extends \yii\db\ActiveRecord
     {
         return [
             [['store_id', 'name'], 'required'],
-            [['store_id', 'discount_type', 'expire_type', 'expire_day', 'begin_time', 'end_time', 'addtime', 'type','is_delete', 'total_count', 'is_join', 'sort','appoint_type','is_integral','integral','total_num','user_num','num'], 'integer'],
+            [['store_id', 'discount_type', 'expire_type', 'expire_day', 'begin_time', 'end_time', 'addtime', 'type','is_delete', 'total_count', 'is_join', 'sort','appoint_type','is_integral','integral','total_num','limit_num','user_num','num'], 'integer'],
             [['min_price', 'sub_price', 'discount','price'], 'number'],
             [['name','cat_id_list','goods_id_list'], 'string', 'max' => 255],
             [['desc', 'pic_url','coupon_bg_url'], 'string', 'max' => 2000],
@@ -97,6 +98,7 @@ class Coupon extends \yii\db\ActiveRecord
             'integral' => '购买需要积分数量',
             'total_num' => '积分商城发放总数',
             'user_num' => '每人限制兑换数量',
+            'limit_num' => '每人限制领取数量',
             'price' => '售价',
             'rule' => '使用规则说明',
         ];

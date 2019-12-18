@@ -88,7 +88,7 @@ $config = [
         'cache' => require __DIR__ . '/cache.php',
         'redis' => [
             'class' => 'yii\redis\Connection',
-            'hostname' => '127.0.0.1',
+            'hostname' => '192.168.1.8',
             'port' => 6379,
             'database' => 0,
         ],

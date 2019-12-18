@@ -28,6 +28,7 @@ use app\models\PtOrder;
 use app\models\PtOrderDetail;
 use app\models\PtSetting;
 use app\models\Setting;
+use app\models\Store;
 use app\models\User;
 use app\models\YyGoods;
 use app\models\YyOrder;
@@ -71,6 +72,8 @@ class ShareMoneyForm extends ApiModel
         }
 
         $orderDetail = $this->getDetail();
+
+
         if (!$orderDetail) {
             \Yii::warning('订单详情不存在','info');
             return false;
@@ -142,31 +145,70 @@ class ShareMoneyForm extends ApiModel
         $share_commission_money_first = 0;//一级分销总佣金
         $share_commission_money_second = 0;//二级分销总佣金
         $share_commission_money_third = 0;//三级分销总佣金
+
+
+        //按商品限制
+        $store1 = Store::findOne([
+            'id' => $this->store_id
+        ]);
         foreach ($orderDetail as $item) {
             $item_price = doubleval($item['price']);
-            if ($item['individual_share'] == 1) {
-                $rate_first = doubleval($item['share_commission_first']);
-                $rate_second = doubleval($item['share_commission_second']);
-                $rate_third = doubleval($item['share_commission_third']);
-                $shareType = $item['share_type'];
-            } else {
-                if (isset($item['mch_id']) && $item['mch_id'] > 0) {
-                    continue;
+            //**********************分销返佣限制 新加入逻辑  2019年12月18日14:50:54************************
+            if ($store1->share_min_price == 0) {
+                if ($item['individual_share'] == 1) {
+                    $rate_first = doubleval($item['share_commission_first']);
+                    $rate_second = doubleval($item['share_commission_second']);
+                    $rate_third = doubleval($item['share_commission_third']);
+                    $shareType = $item['share_type'];
+                } else {
+                    if (isset($item['mch_id']) && $item['mch_id'] > 0) {
+                        continue;
+                    }
+                    $rate_first = doubleval($setting->first);
+                    $rate_second = doubleval($setting->second);
+                    $rate_third = doubleval($setting->third);
+                    $shareType = $setting->price_type;
                 }
-                $rate_first = doubleval($setting->first);
-                $rate_second = doubleval($setting->second);
-                $rate_third = doubleval($setting->third);
-                $shareType = $setting->price_type;
+                if ($shareType == 1) {
+                    $share_commission_money_first += $rate_first * $item['num'];
+                    $share_commission_money_second += $rate_second * $item['num'];
+                    $share_commission_money_third += $rate_third * $item['num'];
+                } else {
+                    $share_commission_money_first += $item_price * $rate_first / 100;
+                    $share_commission_money_second += $item_price * $rate_second / 100;
+                    $share_commission_money_third += $item_price * $rate_third / 100;
+                }
+            }else
+            {
+                if ($item_price > $store1->share_min_price) {
+                    //验证是否最低消费金额小于商品金额
+                    if ($item['individual_share'] == 1) {
+                        $rate_first = doubleval($item['share_commission_first']);
+                        $rate_second = doubleval($item['share_commission_second']);
+                        $rate_third = doubleval($item['share_commission_third']);
+                        $shareType = $item['share_type'];
+                    } else {
+                        if (isset($item['mch_id']) && $item['mch_id'] > 0) {
+                            continue;
+                        }
+                        $rate_first = doubleval($setting->first);
+                        $rate_second = doubleval($setting->second);
+                        $rate_third = doubleval($setting->third);
+                        $shareType = $setting->price_type;
+                    }
+                    if ($shareType == 1) {
+                        $share_commission_money_first += $rate_first * $item['num'];
+                        $share_commission_money_second += $rate_second * $item['num'];
+                        $share_commission_money_third += $rate_third * $item['num'];
+                    } else {
+                        $share_commission_money_first += $item_price * $rate_first / 100;
+                        $share_commission_money_second += $item_price * $rate_second / 100;
+                        $share_commission_money_third += $item_price * $rate_third / 100;
+                    }
+                }
             }
-            if ($shareType == 1) {
-                $share_commission_money_first += $rate_first * $item['num'];
-                $share_commission_money_second += $rate_second * $item['num'];
-                $share_commission_money_third += $rate_third * $item['num'];
-            } else {
-                $share_commission_money_first += $item_price * $rate_first / 100;
-                $share_commission_money_second += $item_price * $rate_second / 100;
-                $share_commission_money_third += $item_price * $rate_third / 100;
-            }
+            //**********************************************
+
         }
 
         // 如果开启自购返利 一级是自己

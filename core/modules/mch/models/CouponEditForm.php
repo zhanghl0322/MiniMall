@@ -36,6 +36,7 @@ class CouponEditForm extends MchModel
     public $goods_id_list;
     public $rule;
     public $coupon_bg_url;
+    public $limit_num;//TODO 限制领取数量  2019年12月18日09:28:55
 
     public function rules()
     {
@@ -46,7 +47,7 @@ class CouponEditForm extends MchModel
             [['expire_day'], 'integer', 'min' => 0, 'max' => 999],
             [['min_price', 'sub_price'], 'number', 'min' => 0, 'max' => 999999],
             [['discount',], 'number', 'min' => 0.1, 'max' => 10],
-            [['total_count'], 'number', 'min' => -1],
+            [['total_count','limit_num'], 'number', 'min' => -1],
             [['total_count'], 'default', 'value' => -1],
             [['is_join'], 'in', 'range' => [1, 2]],
             [['sort'], 'default', 'value' => 100],
@@ -77,6 +78,7 @@ class CouponEditForm extends MchModel
             'goods_id_list' => '指定商品id',
             'rule' => '使用说明',
             'coupon_bg_url'=>'优惠券背景图',
+            'limit_num'=>'限制数量'
         ];
     }
 
@@ -99,7 +101,9 @@ class CouponEditForm extends MchModel
         $this->coupon->sort = $this->sort;
         $this->coupon->rule = $this->rule;
         $this->coupon->appoint_type = $this->appoint_type;
-         $this->coupon->coupon_bg_url =$this->coupon_bg_url;//TODO 新增优惠券背景图 2019年12月11日13:57:17
+        $this->coupon->coupon_bg_url =$this->coupon_bg_url;//TODO 新增优惠券背景图 2019年12月11日13:57:17
+        $this->coupon->limit_num=$this->limit_num;//赋值填充限制数量
+
         \Yii::warning('记录背景'.$this->coupon_bg_url,'info');
         $old_cat_id_list = json_decode($this->coupon->cat_id_list);
 

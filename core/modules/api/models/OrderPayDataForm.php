@@ -306,16 +306,17 @@ class OrderPayDataForm extends ApiModel
 
                 //TODO 如果超过有效保护期、将无佣金  2019年11月22日11:49:18
                 if (time() < ($user1->parent_binding_validity + ($store1->share_validity_time * 86400))) {
-                    //如果存在设置返佣最低消费金额
-                    if ($store1->share_min_price == 0) {
-                        //验证最低消费金额是否无限制
-                        $this->setReturnData($this->order);
-                    } else {
-                        if ($this->order->pay_price > $store1->share_min_price) {
-                            //验证是否最低消费金额小于订单支付金额
-                            $this->setReturnData($this->order);
-                        }
-                    }
+                    $this->setReturnData($this->order);
+//                    //如果存在设置返佣最低消费金额
+//                    if ($store1->share_min_price == 0) {
+//                        //验证最低消费金额是否无限制
+//                        $this->setReturnData($this->order);
+//                    } else {
+//                        if ($this->order->pay_price > $store1->share_min_price) {
+//                            //验证是否最低消费金额小于订单支付金额
+//                            $this->setReturnData($this->order);
+//                        }
+//                    }
                 }
 
             }

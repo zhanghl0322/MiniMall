@@ -288,6 +288,19 @@ $this->params['active_nav_group'] = 7;
 
                     </div>
                 </div>
+                <div class="form-group row total-count"
+                     style="<?= $model->is_join == null || $model->is_join == 1 ? 'display:none' : null ?>">
+                    <div class="form-group-label col-3 text-right">
+                        <label class=" col-form-label required">每人最高领取数</label>
+                    </div>
+                    <div class="col-9">
+                        <input class="form-control" type="number" step="1" min="1" name="limit_num"
+                               value="<?= $model->limit_num ? $model->limit_num : -1 ?>">
+                        <div class="text-danger text-muted">注：限领总数量，-1为不限制张数</div>
+                        <div class="text-danger text-muted">注：限领总数量只限制单用户在领取的优惠券数量</div>
+
+                    </div>
+                </div>
                 <div class="form-group row">
                     <div class="form-group-label col-3 text-right">
                         <label class=" col-form-label required">排序</label>
