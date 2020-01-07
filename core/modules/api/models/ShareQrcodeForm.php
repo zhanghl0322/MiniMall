@@ -8,6 +8,7 @@
 
 namespace app\modules\api\models;
 
+use app\models\common\api\CommonOrder;
 use app\models\GoodsQrcode;
 use app\utils\CurlHelper;
 use app\utils\GenerateShareQrcode;
@@ -914,7 +915,17 @@ class ShareQrcodeForm extends ApiModel
         } else {
             $scene = "{$this->user_id}";
         }
-        $wxapp_qrcode_file_res = $this->getQrcode($scene);
+        $share_mark= CommonOrder::isShare($this->user_id);//校验是否是加盟商、生成对应二维码界面
+        \Yii::warning("==分销商标识......==".$share_mark,'info');
+        if($share_mark=='parent_id_1')
+        {
+            $page='pages/join-share-qrcode/join-share-qrcode';
+            $wxapp_qrcode_file_res = $this->getQrcode($scene,240,$page);
+        }else
+        {
+            $wxapp_qrcode_file_res = $this->getQrcode($scene);
+        }
+//        $wxapp_qrcode_file_res = $this->getQrcode($scene);
         if ($wxapp_qrcode_file_res['code'] == 1) {
             unlink($qrcode_bg);
             return [

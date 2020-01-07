@@ -97,7 +97,8 @@ class DiyTemplateEditForm extends MchModel
                 }
             }
             unset($value);
-            array_splice($list, 40);// TODO 从数组中移除元素  不知道什么时候改的   原版是20
+            //PS:应周总【2019年12月23日11:40】移除限制商品分类加载商品个数要求
+            //array_splice($list, 40);// TODO 从数组中移除元素  不知道什么时候改的   原版是20
             $detail->template = json_encode($list,JSON_UNESCAPED_UNICODE);
 
             if ($detail->save()) {

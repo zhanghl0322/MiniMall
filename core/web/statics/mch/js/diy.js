@@ -1301,14 +1301,15 @@ $(document).on('input', '.input-num', function () {
     if (typeof app.param_key == 'undefined') {
         return;
     }
+    console.log('测试文件.....');
     app.temp_list[app.temp_index].param.list[app.param_key][param] = item;
     var _param = _this.attr('data-param');
     if (_this.val() < 0) {
         _this.val(0);
         app.temp_list[app.temp_index].param.list[app.param_key][_param] = 0;
-    } else if (_this.val() > 30) {
-        _this.val(30);
-        app.temp_list[app.temp_index].param.list[app.param_key][_param] = 30;
+    } else if (_this.val() > 9999) {
+        _this.val(9999);
+        app.temp_list[app.temp_index].param.list[app.param_key][_param] = 9999;
     }
     reset(param);
 });
@@ -1470,9 +1471,11 @@ $(document).on('click', '.goods-btn', function () {
             param.original_price = goods.original_price;
             app.temp_list[app.temp_index].param.list[app.param_key].goods_list.push(param);
         } else {
-            if (app.temp_list[app.temp_index].param.list[app.param_key].goods_list.length >= 30) {
+            //TODO 调整js文件限制分类组件添加30商品上限问题 2019年12月23日15:52:12
+            if (app.temp_list[app.temp_index].param.list[app.param_key].goods_list.length >= 9999) {
                 return;
             }
+            Console.log('测试限制文件......')
             var param = JSON.parse(JSON.stringify(app.defaultList.goods.goods_one));
             param.id = goods.id;
             param.goods_id = goods.id;

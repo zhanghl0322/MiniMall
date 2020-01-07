@@ -16,7 +16,7 @@ class CommonWx
         return [
             [
                 'url' => 'pages/share/index',
-                'title' => '分销中心',
+                'title' => '代言中心',
             ],
             [
                 'url' => 'pages/user/user',

@@ -78,13 +78,16 @@ class CouponShareSendForm extends ApiModel
         //->exists()
         $user_coupon = UserCoupon::find()
             ->where(['store_id'=>$this->store_id,'coupon_id'=>$this->id,'user_id'=>$this->user_id,'type'=>2,'is_delete'=>0])->count();
+
+        \Yii::warning($user_coupon.'==测试文件A=='.$coupon['limit_num'],'info');
         //调整优惠券由设置限制数量控制领取券张数  2019年12月18日10:19:41
-        if ($user_coupon==$coupon->limit_num) {
+        if ($coupon['limit_num']>0&&$coupon['limit_num']<=$user_coupon) {
             $coupon_list[] = $coupon;
             $form = new CouponListForm();
             $form->store_id = $this->store_id;
             $form->user_id = \Yii::$app->user->identity->id;
             $coupon_list_new = $form->getList();
+            \Yii::warning($user_coupon.'==测试文件=='.$coupon['limit_num'],'info');
             return [
                 'code'=>1,
                 'msg'=>'已领取',

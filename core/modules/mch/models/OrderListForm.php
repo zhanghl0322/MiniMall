@@ -355,4 +355,345 @@ class OrderListForm extends MchModel
 
         return $data;
     }
+
+
+    /**
+     * @return array
+     * @throws \yii\db\Exception
+     * 新增的合并全部订单逻辑、在视图里面转化不灵活、存储过程里面不能使用UNION ALL 语句
+     */
+    public function orderAll()
+    {
+        $pageIndex = ($this->page - 1) * 10;
+        $sqlWhere = 'where 1=1';
+        //TODO 搜索 持续优化中...
+        $commonOrderSearch = new CommonOrderSearch();
+        $sqlWhere = $commonOrderSearch->order_all_keyword($sqlWhere, $this->keyword_1, $this->keyword);
+
+        $count = $this->queryAllCount($sqlWhere);//计算订单数量
+
+        if($this->date_start)
+        {
+            $date_start=strtotime( $this->date_start);
+            $date_end=strtotime( $this->date_end);
+            $sqlWhere="WHERE addtime BETWEEN {$date_start} AND {$date_end} ";
+        }
+
+        $pagination = new Pagination(['totalCount' => $count, 'pageSize' => $this->limit, 'page' => $this->page - 1]);
+        $sql = "SELECT  * FROM (SELECT *
+FROM 
+    (SELECT 
+         `o`.id,
+         `o`.store_id,
+         `o`.user_id,
+         `o`.order_no,
+         `o`.total_price,
+         `o`.pay_price,
+         `o`.express_price,
+         `o`.name,
+         `o`.mobile,
+         `o`.address,
+         `o`.remark,
+         `o`.is_pay,
+         `o`.send_time,
+         `o`.express,
+         `o`.express_no,
+         `o`.is_confirm,
+         `o`.addtime,
+         `o`.confirm_time,
+         od.`attr` AS attr, od.`num` AS num, od.`pic` AS pic, g.`name` AS goods_name, `u`.`nickname`, IFNULL(m.name, \"车海洋自营\") AS mch_name, `u`.`platform`, 
+        (SELECT `nickname`
+        FROM `hjmall_user`
+        WHERE (`store_id`={$this->store_id})
+                AND (id = o.clerk_id)) AS `clerk_name`, 
+            (SELECT `status`
+            FROM `hjmall_order_refund`
+            WHERE ((`store_id`={$this->store_id})
+                    AND (`is_delete`=0))
+                    AND (order_id = o.id)
+            ORDER BY  `addtime` DESC LIMIT 1) AS `refund`, 'zc' AS order_type,
+              g.cover_pic AS  goods_pic
+            FROM `hjmall_order` `o`
+            LEFT JOIN `hjmall_user` `u`
+                ON u.id = o.user_id
+            LEFT JOIN `hjmall_order_detail` `od`
+                ON od.order_id=o.id
+            LEFT JOIN `hjmall_goods` `g`
+                ON g.id=od.goods_id
+            LEFT JOIN `hjmall_mch` `m`
+                ON g.mch_id=m.id
+            WHERE ((`o`.`store_id`={$this->store_id})
+                    AND (`o`.`is_show`=1))
+                    AND ((`o`.`is_cancel`=0)
+                    AND (`o`.`is_delete`=0)) 
+                    #AND (`o`.`order_no` LIKE '%20190910094314757672%')
+                    AND (`o`.`type`=0)
+                    AND (`o`.`is_recycle`=0)
+            GROUP BY  `o`.`id`
+            ORDER BY  `o`.`addtime` DESC   ) AS order_list
+            
+        UNION ALL
+        SELECT *
+FROM 
+    (SELECT  `o`.id,
+         `o`.store_id,
+         `o`.user_id,
+         `o`.order_no,
+         `o`.total_price,
+         `o`.pay_price,
+         `o`.express_price,
+         `o`.name,
+         `o`.mobile,
+         `o`.address,
+         `o`.remark,
+         `o`.is_pay,
+         `o`.send_time,
+         `o`.express,
+         `o`.express_no,
+         `o`.is_confirm,
+         `o`.addtime,
+         `o`.confirm_time,
+         `o`.`attr`,
+         `o`.`num`,
+         `o`.`pic`,
+         `g`.`name` AS `goods_name`,
+         `u`.`nickname`,
+         IFNULL(m.name,
+         \"车海洋自营\") AS mch_name,
+         `u`.`platform`,
+         `u`.`nickname` AS `clerk_name`,
+         '' AS refund, 'ms' AS order_type,
+          g.cover_pic AS  goods_pic
+         
+    FROM `hjmall_ms_order` `o`
+    LEFT JOIN `hjmall_user` `u`
+        ON u.id=o.user_id
+    LEFT JOIN `hjmall_ms_goods` `g`
+        ON g.id=o.goods_id
+    LEFT JOIN `hjmall_mch` `m`
+        ON g.mch_id=m.id
+    WHERE (`is_show`=1)
+            AND (`o`.`store_id`={$this->store_id})
+            AND (`o`.`is_recycle`=0)
+            AND ((`o`.`is_cancel`=0)
+            AND (`o`.`is_delete`=0)) #AND (`o`.`order_no` LIKE '%M20190719094615566418%')
+    ORDER BY  `o`.`addtime` DESC  ) AS ms_order_list
+UNION ALL
+SELECT *
+FROM 
+    (SELECT  `o`.id,
+         `o`.store_id,
+         `o`.user_id,
+         `o`.order_no,
+         `o`.total_price,
+         `o`.pay_price,
+         `o`.express_price,
+         `o`.name,
+         `o`.mobile,
+         `o`.address,
+         `o`.remark,
+         `o`.is_pay,
+         `o`.send_time,
+         `o`.express,
+         `o`.express_no,
+         `o`.is_confirm,
+          `o`.addtime,
+         `o`.confirm_time,
+         `od`.`attr`,
+         `od`.`num`,
+         `od`.`pic`,
+         `g`.`name` AS `goods_name`,
+         `u`.`nickname`,
+         IFNULL(m.name,
+         \"车海洋自营\") AS mch_name,
+         `u`.`platform`,
+         `c`.`nickname` AS `clerk_name`,
+         '' AS refund, 'pt' AS order_type,
+          g.cover_pic AS  goods_pic
+    FROM `hjmall_pt_order` `o`
+    LEFT JOIN `hjmall_user` `u`
+        ON u.id=o.user_id
+    LEFT JOIN `hjmall_user` `c`
+        ON c.id=o.clerk_id
+    INNER JOIN `hjmall_pt_order_detail` `od`
+        ON od.order_id=o.id
+    LEFT JOIN `hjmall_pt_goods` `g`
+        ON g.id=od.goods_id
+    LEFT JOIN `hjmall_mch` `m`
+        ON g.mch_id=m.id
+    WHERE (`is_show`=1)
+            AND ((`o`.`is_delete`=0)
+            AND (`o`.`store_id`={$this->store_id}))
+            AND (`o`.`is_recycle`=0)
+            AND (`o`.`is_cancel`=0) #AND (`o`.`order_no` LIKE '%20190516081044363479%')
+    ORDER BY  `o`.`addtime` DESC ) AS pt_order_list ) AS all_order {$sqlWhere} LIMIT {$pageIndex},10  ";
+        $order_list = \Yii::$app->db->createCommand($sql)->queryAll();
+
+        return [
+            'row_count' => $count,
+            'page_count' => $pagination->pageCount,
+            'pagination' => $pagination,
+            'list' => $order_list,
+        ];
+    }
+
+    /**
+     * @param $sqlWhere
+     * @return false|string|null
+     * @throws \yii\db\Exception
+     * 计算订单数量
+     */
+    public function queryAllCount($sqlWhere)
+    {
+        $order_count = "SELECT  COUNT(*)  AS 'order_count' FROM (SELECT *
+FROM 
+    (SELECT 
+         `o`.id,
+         `o`.store_id,
+         `o`.user_id,
+         `o`.order_no,
+         `o`.total_price,
+         `o`.pay_price,
+         `o`.express_price,
+         `o`.name,
+         `o`.mobile,
+         `o`.address,
+         `o`.remark,
+         `o`.is_pay,
+         `o`.send_time,
+         `o`.express,
+         `o`.express_no,
+         `o`.is_confirm,
+         `o`.addtime,
+         `o`.confirm_time,
+         od.`attr` AS attr, od.`num` AS num, od.`pic` AS pic, g.`name` AS goods_name, `u`.`nickname`, IFNULL(m.name, \"车海洋自营\") AS mch_name, `u`.`platform`, 
+        (SELECT `nickname`
+        FROM `hjmall_user`
+        WHERE (`store_id`={$this->store_id})
+                AND (id = o.clerk_id)) AS `clerk_name`, 
+            (SELECT `status`
+            FROM `hjmall_order_refund`
+            WHERE ((`store_id`={$this->store_id})
+                    AND (`is_delete`=0))
+                    AND (order_id = o.id)
+            ORDER BY  `addtime` DESC LIMIT 1) AS `refund`, 'zc' AS order_type,
+              g.cover_pic AS  goods_pic
+            FROM `hjmall_order` `o`
+            LEFT JOIN `hjmall_user` `u`
+                ON u.id = o.user_id
+            LEFT JOIN `hjmall_order_detail` `od`
+                ON od.order_id=o.id
+            LEFT JOIN `hjmall_goods` `g`
+                ON g.id=od.goods_id
+            LEFT JOIN `hjmall_mch` `m`
+                ON g.mch_id=m.id
+            WHERE ((`o`.`store_id`={$this->store_id})
+                    AND (`o`.`is_show`=1))
+                    AND ((`o`.`is_cancel`=0)
+                    AND (`o`.`is_delete`=0)) 
+                    #AND (`o`.`order_no` LIKE '%20190910094314757672%')
+                    AND (`o`.`type`=0)
+                    AND (`o`.`is_recycle`=0)
+            GROUP BY  `o`.`id`
+            ORDER BY  `o`.`addtime` DESC   ) AS order_list
+        UNION ALL
+        SELECT *
+FROM 
+    (SELECT  `o`.id,
+         `o`.store_id,
+         `o`.user_id,
+         `o`.order_no,
+         `o`.total_price,
+         `o`.pay_price,
+         `o`.express_price,
+         `o`.name,
+         `o`.mobile,
+         `o`.address,
+         `o`.remark,
+         `o`.is_pay,
+         `o`.send_time,
+         `o`.express,
+         `o`.express_no,
+         `o`.is_confirm,
+         `o`.addtime,
+         `o`.confirm_time,
+         `o`.`attr`,
+         `o`.`num`,
+         `o`.`pic`,
+         `g`.`name` AS `goods_name`,
+         `u`.`nickname`,
+         IFNULL(m.name,
+         \"车海洋自营\") AS mch_name,
+         `u`.`platform`,
+         `u`.`nickname` AS `clerk_name`,
+         '' AS refund, 'ms' AS order_type,
+          g.cover_pic AS  goods_pic
+         
+    FROM `hjmall_ms_order` `o`
+    LEFT JOIN `hjmall_user` `u`
+        ON u.id=o.user_id
+    LEFT JOIN `hjmall_ms_goods` `g`
+        ON g.id=o.goods_id
+    LEFT JOIN `hjmall_mch` `m`
+        ON g.mch_id=m.id
+    WHERE (`is_show`=1)
+            AND (`o`.`store_id`={$this->store_id})
+            AND (`o`.`is_recycle`=0)
+            AND ((`o`.`is_cancel`=0)
+            AND (`o`.`is_delete`=0)) #AND (`o`.`order_no` LIKE '%M20190719094615566418%')
+    ORDER BY  `o`.`addtime` DESC  ) AS ms_order_list
+UNION ALL
+SELECT *
+FROM 
+    (SELECT  `o`.id,
+         `o`.store_id,
+         `o`.user_id,
+         `o`.order_no,
+         `o`.total_price,
+         `o`.pay_price,
+         `o`.express_price,
+         `o`.name,
+         `o`.mobile,
+         `o`.address,
+         `o`.remark,
+         `o`.is_pay,
+         `o`.send_time,
+         `o`.express,
+         `o`.express_no,
+         `o`.is_confirm,
+          `o`.addtime,
+         `o`.confirm_time,
+         `od`.`attr`,
+         `od`.`num`,
+         `od`.`pic`,
+         `g`.`name` AS `goods_name`,
+         `u`.`nickname`,
+         IFNULL(m.name,
+         \"车海洋自营\") AS mch_name,
+         `u`.`platform`,
+         `c`.`nickname` AS `clerk_name`,
+         '' AS refund, 'pt' AS order_type,
+          g.cover_pic AS  goods_pic
+    FROM `hjmall_pt_order` `o`
+    LEFT JOIN `hjmall_user` `u`
+        ON u.id=o.user_id
+    LEFT JOIN `hjmall_user` `c`
+        ON c.id=o.clerk_id
+    INNER JOIN `hjmall_pt_order_detail` `od`
+        ON od.order_id=o.id
+    LEFT JOIN `hjmall_pt_goods` `g`
+        ON g.id=od.goods_id
+    LEFT JOIN `hjmall_mch` `m`
+        ON g.mch_id=m.id
+    WHERE (`is_show`=1)
+            AND ((`o`.`is_delete`=0)
+            AND (`o`.`store_id`={$this->store_id}))
+            AND (`o`.`is_recycle`=0)
+            AND (`o`.`is_cancel`=0) #AND (`o`.`order_no` LIKE '%20190516081044363479%')
+    ORDER BY  `o`.`addtime` DESC ) AS pt_order_list ) AS all_order {$sqlWhere}  ";
+
+        $count = \Yii::$app->db->createCommand($order_count)->queryScalar();//条数
+        return $count;
+    }
+
 }

@@ -95,4 +95,29 @@ class CommonOrderSearch
 
         return $query;
     }
+
+    public function order_all_keyword($query, $keywordType, $keyword)
+    {
+        if (isset($keyword) && $keyword) {
+            switch ($keywordType) {
+                case 1:
+                    $query="WHERE order_no LIKE '%{$keyword}%'";
+                    break;
+                case 2:
+                    $query="WHERE nickname LIKE '%{$keyword}%'";
+                    break;
+                case 4:
+                    $query="WHERE user_id={$keyword}";
+                    break;
+                case 6:
+                    $query="WHERE mobile LIKE '%{$keyword}%'";
+                    break;
+                default:
+                    $query="WHERE 1=1";
+                    break;
+            }
+        }
+
+        return $query;
+    }
 }

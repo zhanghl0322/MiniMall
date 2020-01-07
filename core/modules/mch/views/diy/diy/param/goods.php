@@ -91,7 +91,7 @@ $statics = Yii::$app->request->baseUrl . '/statics';
                                 <div class="form-group-label col-sm-3 text-right">
                                     <label class="col-form-label">商品显示</label>
                                     <br>
-                                    <label class="col-form-label text-danger fs-sm">最多显示30个商品</label>
+                                    <label class="col-form-label text-danger fs-sm">温馨提示：建议最多显示30个商品，过多会导致手机界面加载过慢</label>
                                 </div>
                                 <div class="col-sm-9 d-flex flex-wrap">
                                     <label class="radio-label list-radio-block"
@@ -108,7 +108,7 @@ $statics = Yii::$app->request->baseUrl . '/statics';
                                         <span class="label-icon"></span>
                                     <span class="label-text">
                                         <input class="form-control input-num" style="width: 70px;" type="number" min="1"
-                                               max="30"
+                                               max="9999"
                                                v-model="value.goods_num" data-param="goods_num">
                                     </span>
                                     </label>
@@ -128,7 +128,7 @@ $statics = Yii::$app->request->baseUrl . '/statics';
                                                     <div class="chacha chacha-goods"></div>
                                                 </div>
                                             </template>
-                                            <div :data-key="key" v-if="value.goods_list.length < 30"
+                                            <div :data-key="key" v-if="value.goods_list.length < 9999"
                                                  class="goods-add img-list d-flex justify-content-center align-items-center">
                                                 +
                                             </div>

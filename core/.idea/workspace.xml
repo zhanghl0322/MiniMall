@@ -1,24 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="16416024-8540-4510-8d45-4d932b47861f" name="Default Changelist" comment="">
+    <list default="true" id="16416024-8540-4510-8d45-4d932b47861f" name="Default Changelist" comment="MiniMall=&gt;1.新增分销最低金额返佣逻辑、以商品价进行限制、2.新增优惠券领取后台设置限领张数">
+      <change afterPath="$PROJECT_DIR$/models/UserCenterForm【控制C端分销显示跟隐藏】.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/mch/views/layouts/order-search/order-search-all.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/modules/mch/views/order/order-all.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/core.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/core.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/Coupon.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/Coupon.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/UserCenterForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/UserCenterForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/UserCenterMenu.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/UserCenterMenu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/common/CommonWx.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/common/CommonWx.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/common/admin/order/CommonOrderSearch.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/common/admin/order/CommonOrderSearch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/common/api/CommonOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/common/api/CommonOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/controllers/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/controllers/DefaultController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/api/models/CouponShareSendForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/CouponShareSendForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/models/GoodsForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/GoodsForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/models/LoginForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/LoginForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/api/models/OrderPayDataForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/OrderPayDataForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/api/models/ShareMoneyForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/ShareMoneyForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/mch/controllers/GoodsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/controllers/GoodsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/modules/mch/models/CouponEditForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/CouponEditForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/models/ShareQrcodeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/ShareQrcodeForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/api/models/diy/DiyTemplateForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/api/models/diy/DiyTemplateForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/controllers/OrderController.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/controllers/OrderController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/controllers/permission/Menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/controllers/permission/Menu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/OrderListForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/OrderListForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/ShareCustomForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/ShareCustomForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/ShareGetQrcodeForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/ShareGetQrcodeForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/models/diy/DiyTemplateEditForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/models/diy/DiyTemplateEditForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modules/mch/views/coupon/edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/views/coupon/edit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/modules/mch/views/diy/diy/param/goods.php" beforeDir="false" afterPath="$PROJECT_DIR$/modules/mch/views/diy/diy/param/goods.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/02/022c804503d7af94d885d9d55ef091b9.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/02/02f68d35884ffee0736615e3245d3a20.bin" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/cache/02/02f68d35884ffee0736615e3245d3a20.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/0e/0edf240e422ccbea7a7b6d9c5d793695.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/15/153a9044136018ef2135edc461d26f01.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/1a/1acfb30051670198d63ea58632dd7182.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/1d/1dbc2fa0049befb4381bebf5c43ada16.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/1f/1f8b8114f8f351276934508b7dbc69f2.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/20/206a7612f02eba4f0dfab05d3819807d.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/23/230852426f44f954ed343693bf439002.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/30/302155897500e539a5dc4da3798df4b9.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/35/359a9eb9161435b35e2b23434ac294bc.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/38/383714e6b977f19c1ed8c888e89142be.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/3c/3c76b368afcded645b8d52bb0f0529b5.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/44/4439ca2a3705e762709fbe2e8e9f992e.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/45/455c623ea0e4da43e49c4144eb8245f1.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/45/459e948b85933def0b28f0333ec02093.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/4a/4a880998650e71bf07e113d38d582043.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/4e/4e4a63a06c21c9d253f279e094a85438.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/4f/4f0bede24803a6d4c0a748a7e59f751d.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/4f/4f3c69c44a6e4364360d48f32801d258.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/5b/5bd5be2ccdf25f765a7e44b205c9d3c9.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/70/70a153e6479fff68079d06a5ea499446.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/82/82c0ab283d51dfc8572c9c4a550d7c87.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/85/851138554b176ec00dcbcac851594094.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/88/88b3ec97bcb86428aeb38dd9f2b115c8.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/8f/8f446b9fa2d625d197fb8d01f576f628.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/90/90eee65fa86af47534bba33eb6d1057f.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/95/9506f49bb90af1e8967c800203662afd.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/9e/9eb5f2e9f0dfcb82806ef3a68eb79a85.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/ad/ad3f409e30a3d76505b590590c3827ca.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/ad/ade6f6ba8c142c772a7e7e6d00f017df.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/af/afa6be727726467dc9b52e6880793594.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/b1/b1878836a2c51413261560c5bc39e6ad.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/b2/b27e76518c1b468a02d6099386a4abfe.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/b4/b422c8007166c24575e92044cf293fa4.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/b5/b5b300ff379bbfabe674f2a3e94a0a9b.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/ba/ba89b7cadd78f58cca907031dcff8c15.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/ba/baf11fcc908c0bd87b1d7cf9aa3e58da.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/be/be063d7e4ea439c1d214ed8203d640a0.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/c5/c5ca55b93718308efacdce961ef9c939.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/cd/cd293772bdcd057937fce82310966756.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/cd/cd80996e39f1fc7f6af6e21df0ce0de2.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/cf/cf18ef88f68a30b20c4e3b2a7d98d9c8.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/d1/d1538266f9f2dbf705884dd004b91123.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/d1/d1a6bd95209cb45267cb0b3351c74a80.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/e3/e329b479527c1ace19b6e5ec173cc236.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/e4/e4e1b7dac125aa975469b11e9b54a039.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/ea/eaa93fff5a751bc6d775d7ba676d9162.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/eb/eb3f396f4741d0841eff42f0a8df0cc2.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/eb/ebac3155eccb8a12c2b18a2de380b38b.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/ee/ee8d5b0953bb106203b8dd15a7c6b7b1.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/fd/fdb92cd400c7e81f566197f2abe2b989.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/runtime/cache/fd/fdeb7bb3e137b9f034c418d903fbdc9a.bin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.1" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.2" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.3" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.4" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/runtime/logs/app.log.5" beforeDir="false" afterPath="$PROJECT_DIR$/runtime/logs/app.log.5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/raw.log" beforeDir="false" afterPath="$PROJECT_DIR$/web/raw.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/statics/mch/js/diy.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/statics/mch/js/diy.js" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -177,46 +248,42 @@
   </component>
   <component name="ProjectId" id="1SBRMjs9D9CLDsqMMoKBb9psOfi" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/modules/api/models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\api\models" />
-      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\mch\models" />
+      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core" />
+      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\mch\views\layouts\order-search" />
+      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\mch\views\order" />
       <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\models" />
-      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\mch\views\goods" />
-      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\utils" />
+      <recent name="D:\BT\xampp\htdocs\addons\zjhj_mall\core\modules\api\models\diy" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="ServiceViewManager">
-    <option name="allServicesViewState">
-      <serviceView>
-        <treeState>
-          <expand />
-          <select />
-        </treeState>
-      </serviceView>
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
     </option>
   </component>
   <component name="SvnConfiguration">
@@ -389,7 +456,24 @@
       <workItem from="1576027822934" duration="10254000" />
       <workItem from="1576144276343" duration="735000" />
       <workItem from="1576546640376" duration="11624000" />
-      <workItem from="1576630374813" duration="13224000" />
+      <workItem from="1576630374813" duration="16351000" />
+      <workItem from="1576717876241" duration="4702000" />
+      <workItem from="1576722948696" duration="8364000" />
+      <workItem from="1576803522892" duration="22056000" />
+      <workItem from="1576890059755" duration="6587000" />
+      <workItem from="1577062547272" duration="18991000" />
+      <workItem from="1577152693246" duration="15441000" />
+      <workItem from="1577237861507" duration="4399000" />
+      <workItem from="1577323155291" duration="9655000" />
+      <workItem from="1577496353893" duration="8267000" />
+      <workItem from="1577669325373" duration="17434000" />
+      <workItem from="1577759059781" duration="3169000" />
+      <workItem from="1577927357437" duration="13597000" />
+      <workItem from="1578014676375" duration="16421000" />
+      <workItem from="1578105778191" duration="886000" />
+      <workItem from="1578121050526" duration="4334000" />
+      <workItem from="1578273115487" duration="11772000" />
+      <workItem from="1578359773123" duration="2075000" />
     </task>
     <task id="LOCAL-00001" summary="MiniMall=&gt;调整分销加盟商-&gt;加盟商员工下层客户变更绑定关系、以及保护期内、规则的处理">
       <created>1573268327212</created>
@@ -440,7 +524,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576630581223</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="MiniMall=&gt;1.新增分销最低金额返佣逻辑、以商品价进行限制、2.新增优惠券领取后台设置限领张数">
+      <created>1576652398613</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1576652398613</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -476,7 +567,42 @@
     <MESSAGE value="MiniMall=&gt;补充V1版本分销功能所有文件" />
     <MESSAGE value="MiniMall=&gt;调整商品详情页优惠券输出" />
     <MESSAGE value="MiniMall=&gt;设置分销最低金额返佣逻辑、以及后台diy金额设置" />
-    <option name="LAST_COMMIT_MESSAGE" value="MiniMall=&gt;设置分销最低金额返佣逻辑、以及后台diy金额设置" />
+    <MESSAGE value="MiniMall=&gt;1.新增分销最低金额返佣逻辑、以商品价进行限制、2.新增优惠券领取后台设置限领张数" />
+    <option name="LAST_COMMIT_MESSAGE" value="MiniMall=&gt;1.新增分销最低金额返佣逻辑、以商品价进行限制、2.新增优惠券领取后台设置限领张数" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1238" y="250" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1578273513734">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1238" y="250" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578273513734" />
+    <state x="568" y="107" key="CommitChangelistDialog2" timestamp="1578304107574">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="568" y="107" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1578304107574" />
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1577520420064">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1577520420064" />
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1577155136597">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1577155136597" />
+    <state x="748" y="231" key="RollbackChangesDialog" timestamp="1577946593092">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="748" y="231" key="RollbackChangesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1577946593092" />
+    <state x="453" y="152" key="SettingsEditor" timestamp="1577157132586">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="453" y="152" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1577157132586" />
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1578121107169">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="640" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1578121107169" />
+    <state x="567" y="70" width="786" height="900" key="find.popup" timestamp="1578297079377">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="567" y="70" width="786" height="900" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1578297079377" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

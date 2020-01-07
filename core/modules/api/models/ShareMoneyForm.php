@@ -149,10 +149,12 @@ class ShareMoneyForm extends ApiModel
 
         //按商品限制
         $store1 = Store::findOne([
-            'id' => $this->store_id
+            'id' => $order->store_id
         ]);
         foreach ($orderDetail as $item) {
             $item_price = doubleval($item['price']);
+            $item_price_share = doubleval($item['price']/$item['num']);//商品金额拆开
+            \Yii::warning('记录分销商品价格'.$item_price,'info');
             //**********************分销返佣限制 新加入逻辑  2019年12月18日14:50:54************************
             if ($store1->share_min_price == 0) {
                 if ($item['individual_share'] == 1) {
@@ -180,7 +182,7 @@ class ShareMoneyForm extends ApiModel
                 }
             }else
             {
-                if ($item_price > $store1->share_min_price) {
+                if ($item_price_share > $store1->share_min_price) {
                     //验证是否最低消费金额小于商品金额
                     if ($item['individual_share'] == 1) {
                         $rate_first = doubleval($item['share_commission_first']);

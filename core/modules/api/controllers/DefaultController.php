@@ -30,6 +30,7 @@ use app\modules\api\models\GoodsForm;
 use app\modules\api\models\GoodsListForm;
 use app\modules\api\models\IndexForm;
 use app\modules\api\models\SearchForm;
+use app\modules\api\models\LoginForm;
 use app\modules\api\models\ShareQrcodeForm;
 use app\modules\api\models\ShopListForm;
 use app\modules\api\models\StoreConfigForm;
@@ -431,6 +432,10 @@ class DefaultController extends Controller
             'frontColor' => '#000000',
             'backgroundColor' => '#ffffff',
         ]);
+        $form = new LoginForm();
+        $form->share_user_id = \Yii::$app->request->get('share_user_id');
+//        $form->share_user_id = \Yii::$app->request->get('_version');
+        $form->bindParentId();
         return new ApiResponse(0, 'success', $navigation_bar_color);
     }
 

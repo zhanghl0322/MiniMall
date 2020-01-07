@@ -147,23 +147,22 @@ class GoodsForm extends ApiModel
         $query_goods_list = Goods::find()->alias('g')->where(['g.store_id' => $this->store_id, 'g.is_delete' => 0,'g.is_best' => 1])->orderBy('g.mch_sort')->asArray()->all();
 
         //TODO 处理商品是否加入满减活动  2019年9月21日14:16:10
-        $discount_activities = DiscountActivities::findOne([
+        $man_jian_list = DiscountActivities::find([
             'store_id' => $this->store_id,
             'is_delete' => 0,
             'is_join' => 2,
-        ]);
-        if(time() < $discount_activities->begin_time || time() > $discount_activities->end_time){
-            $discount_activities=[];
-            //return new ApiResponse(1, '满减活动暂未开始', []);
-        }
+        ])->andWhere(['>=','end_time',time()])->andWhere(['<=','begin_time',time()])->all();
 
+        $is_join_full_reduction = false;
+        foreach ($man_jian_list as $key => $man_jian_item) {
+            if (in_array($goods->id, json_decode($man_jian_item['goods_id_list']))||count(json_decode($man_jian_item['goods_id_list']))==0) {
+                $is_join_full_reduction = true;//是否满减商品
+            }
+        }
         //========================满减组装业务逻辑 2019年9月16日15:35:40=================================
-        $goods_id_list = json_decode($discount_activities->goods_id_list);//解码json串
-        $is_join_full_reduction=false;
-        if (in_array($goods->id, $goods_id_list)||count($goods_id_list)==0) {
-            $is_join_full_reduction=true;//是否满减商品
-        }
 
+
+        //$is_join_full_reduction=false; //关闭前端满减icon按钮 图标  2019年12月18日15:39:18
 
         //新增商品底部优惠券领取展示 过滤未过期  2019年12月9日14:37:09
         //*****************************************************************************

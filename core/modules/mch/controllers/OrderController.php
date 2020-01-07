@@ -266,6 +266,31 @@ class OrderController extends Controller
         ]);
     }
 
+    //普通订单  秒杀订单 拼团购订单
+    public function actionOrderAll()
+    {
+        $form = new OrderListForm();
+        $form->attributes = \Yii::$app->request->get();
+        $form->attributes = \Yii::$app->request->post();
+        $form->store_id = $this->store->id;
+        $form->keyword=\Yii::$app->request->get('keyword');//订单号
+        $form->page=\Yii::$app->request->get('page');//页码
+        $form->keyword_1=\Yii::$app->request->get('keyword_1');//key
+        $form->date_start=\Yii::$app->request->get('date_start');//开始时间
+        $form->date_end=\Yii::$app->request->get('date_end');//结束时间
+
+        $form->page=isset($form->page)?$form->page:1;
+        $form->limit = 10;
+        $data = $form->orderAll();
+        return $this->render('order-all', [
+            'list' => $data['list'],
+            'pagination' => $data['pagination'],
+            'row_count'=>$data['row_count'],
+        ]);
+    }
+
+
+
     //TODO 新增补充导出订单
     public function actionExport()
     {

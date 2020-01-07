@@ -26,7 +26,7 @@ class UserCenterMenu extends Model
             ],
             [
                 'is_show' => 1,
-                'name' => '分销中心',
+                'name' => '代言中心',
                 'icon' => '/images/icon-user-fx.png',
                 'open_type' => 'navigator',
                 'url' => '/pages/share/index',

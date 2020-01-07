@@ -8,6 +8,7 @@
 
 namespace app\modules\mch\models;
 
+use app\models\common\api\CommonOrder;
 use Curl\Curl;
 
 class ShareGetQrcodeForm extends MchModel
@@ -74,10 +75,23 @@ class ShareGetQrcodeForm extends MchModel
         $api = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token={$access_token}";
         $curl = new Curl();
         $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
+
+        //原首页跳转  2019年12月30日11:34:14
         $data = [
             'scene' => "{$this->user_id}",
             'width' => "430",
         ];
+        $share_mark= CommonOrder::isShare($this->user_id);//校验是否是加盟商、生成对应二维码界面
+        \Yii::warning("==分销商标识......==".$share_mark,'info');
+        if($share_mark=='parent_id_1')
+        {
+            $data = [
+                'scene' => "{$this->user_id}",
+                'width' => "430",
+                'page' => "pages/join-share-qrcode/join-share-qrcode",
+            ];
+        }
+
         $data = json_encode($data);
         \Yii::trace("GET WXAPP QRCODE:" . $data);
         $curl->post($api, $data);

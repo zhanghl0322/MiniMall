@@ -101,7 +101,7 @@ class OrderPayDataForm extends ApiModel
             $commonOrder = CommonOrder::saveParentId($this->parent_user_id);
             \Yii::warning($this->share_parent_user_id.'***********111share_parent_user_idshare_parent_user_id*************','info');
             //新分销关系、谁分销就归属于谁的下级
-            $changeParentId = CommonOrder::changeParentId($this->share_parent_user_id);
+            //$changeParentId = CommonOrder::changeParentId($this->share_parent_user_id);
 
             \Yii::warning($this->parent_user_id.'***********changeParentId************'.$this->user->id,'info');
 
@@ -127,15 +127,7 @@ class OrderPayDataForm extends ApiModel
             //TODO 如果超过有效保护期、将无佣金  2019年11月22日11:49:18
             if (time() < ($user_copy->parent_binding_validity + ($store1->share_validity_time * 86400))) {
                 //如果存在设置返佣最低消费金额
-                if ($store1->share_min_price == 0) {
-                    //验证最低消费金额是否无限制
-                    $this->setReturnData($this->order);
-                } else {
-                    if ($this->order->pay_price > $store1->share_min_price) {
-                        //验证是否最低消费金额小于订单支付金额
-                        $this->setReturnData($this->order);
-                    }
-                }
+                $this->setReturnData($this->order);
             }
 
             $this->order->order_union_id = 0;

@@ -423,6 +423,12 @@ class Menu
                 'route' => 'mch/order/order-list',
             ],
             [
+                'name' => '订单台账',
+                'is_menu' => true,
+                'icon' => 'icon-activity',
+                'route' => 'mch/order/order-all',
+            ],
+            [
                 'name' => '订单管理',
                 'is_menu' => true,
                 'route' => 'mch/order/index',

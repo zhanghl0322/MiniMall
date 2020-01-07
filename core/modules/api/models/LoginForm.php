@@ -11,6 +11,7 @@ namespace app\modules\api\models;
 use Alipay\AlipayRequestFactory;
 use app\hejiang\ApiResponse;
 use app\models\alipay\MpConfig;
+use app\models\common\api\CommonOrder;
 use app\models\Coupon;
 use app\models\IntegralLog;
 use app\models\LotteryUser;
@@ -33,6 +34,8 @@ class LoginForm extends ApiModel
     public $signature;
 
     public $store_id;
+
+    public $share_user_id;//分销加盟商id
 
     public function rules()
     {
@@ -142,6 +145,11 @@ class LoginForm extends ApiModel
                 $data = json_decode($data, true);
             }
             $user = User::findOne(['wechat_open_id' => $data['openId'], 'store_id' => $this->store_id]);
+//            if($this->share_user_id>0)
+//            {
+//                $user
+//            }
+              \Yii::warning('测试分销数字是否进入'.$this->share_user_id,'info');
             if (!$user) {
                 $user = new User();
                 $user->type = 1;
@@ -216,6 +224,41 @@ class LoginForm extends ApiModel
         } else {
             return new ApiResponse(1, '登录失败', $errCode);
         }
+    }
+
+
+    /**
+     * 绑定分销信息
+     */
+    public function bindParentId()
+    {
+
+        $user_id= $this->getCurrentUserId();//这里如果是后台提供的分销码、将无法提取当前用户id
+        //CommonOrder::changeParentUserId($this->share_user_id);
+        \Yii::warning($user_id.'<==$user_id==Test-bindParentId====>share_user_id===>'.$this->share_user_id,'info');
+         $this->logger($user_id.'<==$user_id==Test-bindParentId====>share_user_id===>'.$this->share_user_id);
+         if(!empty($user_id))
+         {
+             \Yii::warning($user_id.'<==admin====share_user_id===>'.$this->share_user_id,'info');
+             $this->logger($user_id.'<==admin====share_user_id===>'.$this->share_user_id);
+             //后台分销码进入   自己不能分销自己
+             if($this->share_user_id>0&&$user_id!=$this->share_user_id)
+             {
+                 CommonOrder::changeParentUserId($this->share_user_id);
+             }
+         }
+//        if($user_id>0)
+//        {
+//            if($this->share_user_id>0)
+//            {
+//                CommonOrder::changeParentUserId($this->share_user_id);
+//                // CommonOrder::changeParentId($this->share_user_id);
+//                //$user->parent_id = $this->share_user_id;
+//                //$user->parent_binding_validity = time();//重新绑定时间
+//                //$user->save();
+//            }
+//
+//        }
     }
 
     private function getOpenid($code)

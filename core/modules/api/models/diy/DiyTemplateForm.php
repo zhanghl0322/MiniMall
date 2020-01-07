@@ -42,6 +42,7 @@ class DiyTemplateForm extends ApiModel
         } else {
             $page = DiyPage::findOne(['is_delete' => 0, 'status' => 1, 'is_index' => 1, 'store_id' => $this->store->id]);
         }
+        //\Yii::$app->redis->set('diy_page',json_encode($page));//redis 数据存储
         if (!$page) {
             return [
                 'code' => 1,
@@ -49,7 +50,21 @@ class DiyTemplateForm extends ApiModel
             ];
         }
 
-        $detail = $page->getTemplate()->asArray()->one();
+
+        //检查Redis是否存在键
+        $is_exist =\Yii::$app->redis->exists('diy_detail_page');
+        \Yii::warning('判断Redis是否存在html'.$is_exist,'info');
+        if($is_exist==1)
+        {
+            $page_html= \Yii::$app->redis->get('diy_detail_page');
+            $detail = json_decode($page_html,true); ;
+            //true返回值是数组,否则返回值为object
+        }
+        else
+        {
+             $detail = $page->getTemplate()->asArray()->one();
+            \Yii::$app->redis->set('diy_detail_page',json_encode($detail));//redis 数据存储
+        }
 
         if ($detail) {
             $detail['template'] = ($detail['template'] == 'null' || !$detail['template']) ? [] : json_decode($detail['template'], true);
@@ -152,11 +167,13 @@ class DiyTemplateForm extends ApiModel
                         $list = [];
                         foreach ($param['list'] as $key => &$value) {
                             if ($value['cat_id'] && $param['list'][$key]['goods_style'] != 2) {
-                                $res = DiyGoods::getGoods('goods', [], $param['list'][$key]['cat_id'], 30, true);
+                                $res = DiyGoods::getGoods('goods', [], $param['list'][$key]['cat_id'], 9999, true);
                                 $goodsList = $res['goods_list'];
-                                if ($param['list'][$key]['goods_style'] == 1) {
-                                    array_splice($goodsList, $param['list'][$key]['goods_num']);
-                                }
+                                //TODO 移除限制30的逻辑处理 2019年12月24日10:29:56
+//                                if ($param['list'][$key]['goods_style'] == 1) {
+//                                    array_splice($goodsList, $param['list'][$key]['goods_num']);
+//                                }
+                                array_splice($goodsList, $param['list'][$key]['goods_num']);
                                 $value['goods_list'] = $goodsList;
                             }
                             if (count($value['goods_list']) > 0) {

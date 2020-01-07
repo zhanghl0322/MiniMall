@@ -288,8 +288,7 @@ $this->params['active_nav_group'] = 7;
 
                     </div>
                 </div>
-                <div class="form-group row total-count"
-                     style="<?= $model->is_join == null || $model->is_join == 1 ? 'display:none' : null ?>">
+                <div class="form-group row total-count">
                     <div class="form-group-label col-3 text-right">
                         <label class=" col-form-label required">每人最高领取数</label>
                     </div>

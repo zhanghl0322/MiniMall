@@ -77,17 +77,18 @@ class ShareCustomForm extends MchModel
 
     public function getDefaultData()
     {
+        //测试
         return [
             'menus' => [
                 'money'=>[
-                    'name' => '分销佣金',
+                    'name' => '佣金',
                     'icon' => \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/statics/images/share-custom/img-share-price.png',
                     'open_type' => 'navigator',
                     'url' => '/pages/share-money/share-money',
                     'tel' => '',
                 ],
                 'order'=>[
-                    'name' => '分销订单',
+                    'name' => '订单',
                     'icon' => \Yii::$app->request->hostInfo . \Yii::$app->request->baseUrl . '/statics/images/share-custom/img-share-order.png',
                     'open_type' => 'navigator',
                     'url' => '/pages/share-order/share-order',
