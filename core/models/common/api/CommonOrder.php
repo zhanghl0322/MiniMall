@@ -195,15 +195,20 @@ class CommonOrder
             ->asArray()->one();
         $current_user= User::findOne(\Yii::$app->user->id); //当前用户id
         $share_mark=CommonOrder::isShare($current_user->id);
+        \Yii::warning('console'.$share_mark,'info');
         if($share_mark=='parent_id_3')
         {
-            if(!empty($parent_user))
-            {
-                //验证是否是加盟商+加盟商员工
+            //验证是否是加盟商+加盟商员工
                 $current_user->parent_id = $parentId;
                 $current_user->parent_binding_validity = time();//重新绑定时间
                 $current_user->save();
-            }
+//            if(!empty($parent_user))
+//            {
+//                //验证是否是加盟商+加盟商员工
+//                $current_user->parent_id = $parentId;
+//                $current_user->parent_binding_validity = time();//重新绑定时间
+//                $current_user->save();
+//            }
         }
 
     }

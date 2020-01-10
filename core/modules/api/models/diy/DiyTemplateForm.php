@@ -50,22 +50,7 @@ class DiyTemplateForm extends ApiModel
             ];
         }
 
-
-        //检查Redis是否存在键
-        $is_exist =\Yii::$app->redis->exists('diy_detail_page');
-        \Yii::warning('判断Redis是否存在html'.$is_exist,'info');
-        if($is_exist==1)
-        {
-            $page_html= \Yii::$app->redis->get('diy_detail_page');
-            $detail = json_decode($page_html,true); ;
-            //true返回值是数组,否则返回值为object
-        }
-        else
-        {
-             $detail = $page->getTemplate()->asArray()->one();
-            \Yii::$app->redis->set('diy_detail_page',json_encode($detail));//redis 数据存储
-        }
-
+        $detail = $page->getTemplate()->asArray()->one();
         if ($detail) {
             $detail['template'] = ($detail['template'] == 'null' || !$detail['template']) ? [] : json_decode($detail['template'], true);
             DiyGoods::getTemplate($detail['template']);

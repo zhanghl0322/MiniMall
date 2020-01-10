@@ -124,10 +124,18 @@ class OrderPayDataForm extends ApiModel
                 'id' => $this->store_id
             ]);
 
+            $share_mark= CommonOrder::isShare($this->order->user_id);//校验是否是加盟商、生成对应二维码界面
+            \Yii::warning('$share_mark================='.$share_mark,'info');
             //TODO 如果超过有效保护期、将无佣金  2019年11月22日11:49:18
-            if (time() < ($user_copy->parent_binding_validity + ($store1->share_validity_time * 86400))) {
-                //如果存在设置返佣最低消费金额
+            if($share_mark!="parent_id_3")
+            {
                 $this->setReturnData($this->order);
+            }else
+            {
+                if (time() < ($user_copy->parent_binding_validity + ($store1->share_validity_time * 86400))) {
+                    //如果存在设置返佣最低消费金额
+                    $this->setReturnData($this->order);
+                }
             }
 
             $this->order->order_union_id = 0;
@@ -296,19 +304,20 @@ class OrderPayDataForm extends ApiModel
                     'id' => $this->store_id
                 ]);
 
+                $share_mark= CommonOrder::isShare($this->order->user_id);//校验是否是加盟商、生成对应二维码界面
+                \Yii::warning('$share_mark================='.$share_mark,'info');
                 //TODO 如果超过有效保护期、将无佣金  2019年11月22日11:49:18
-                if (time() < ($user1->parent_binding_validity + ($store1->share_validity_time * 86400))) {
+
+                //TODO 如果超过有效保护期、将无佣金  2019年11月22日11:49:18
+                if($share_mark!="parent_id_3")
+                {
                     $this->setReturnData($this->order);
-//                    //如果存在设置返佣最低消费金额
-//                    if ($store1->share_min_price == 0) {
-//                        //验证最低消费金额是否无限制
-//                        $this->setReturnData($this->order);
-//                    } else {
-//                        if ($this->order->pay_price > $store1->share_min_price) {
-//                            //验证是否最低消费金额小于订单支付金额
-//                            $this->setReturnData($this->order);
-//                        }
-//                    }
+                }else
+                {
+                    if (time() < ($user1->parent_binding_validity + ($store1->share_validity_time * 86400))) {
+                        //如果存在设置返佣最低消费金额
+                        $this->setReturnData($this->order);
+                    }
                 }
 
             }

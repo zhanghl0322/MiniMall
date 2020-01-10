@@ -1301,7 +1301,6 @@ $(document).on('input', '.input-num', function () {
     if (typeof app.param_key == 'undefined') {
         return;
     }
-    console.log('测试文件.....');
     app.temp_list[app.temp_index].param.list[app.param_key][param] = item;
     var _param = _this.attr('data-param');
     if (_this.val() < 0) {
@@ -1475,7 +1474,7 @@ $(document).on('click', '.goods-btn', function () {
             if (app.temp_list[app.temp_index].param.list[app.param_key].goods_list.length >= 9999) {
                 return;
             }
-            Console.log('测试限制文件......')
+            
             var param = JSON.parse(JSON.stringify(app.defaultList.goods.goods_one));
             param.id = goods.id;
             param.goods_id = goods.id;
@@ -1889,7 +1888,7 @@ $(document).on('click', '.nav-banner-btn', function () {
     $(check_list).each(function (i) {
         var index = $(check_list[i]).attr('data-index');
         var one = app.modal_list.list[index];
-        console.log(key)
+        
         var param = JSON.parse(JSON.stringify(app.defaultList[key]));
         if (key == 'nav') {
             param.name = one.name;

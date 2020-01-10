@@ -82,6 +82,14 @@ $config = [
                     'logVars' => ['*'],
                     'logFile' => '@runtime/logs/info.log',
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'categories' => ['system'],//归类为系统级
+                    'levels' => ['info'],
+                    'logVars' => ['*'],
+                    'logFile' =>'@runtime/logs/user_journey_log/'.date("Ymd",time()).'.log',  //和表order相关的的日志文件放在以'order_日期.log'命名的log文件里
+//                    'logFile' => "@runtime/logs/".date("Ymd", time()) .".log",//[时间] - [级别] - [类别] - [内容]
+                ],
 
             ],
         ],

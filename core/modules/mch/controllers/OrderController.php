@@ -278,7 +278,7 @@ class OrderController extends Controller
         $form->keyword_1=\Yii::$app->request->get('keyword_1');//key
         $form->date_start=\Yii::$app->request->get('date_start');//开始时间
         $form->date_end=\Yii::$app->request->get('date_end');//结束时间
-
+        \Yii::info('测试11111','system');
         $form->page=isset($form->page)?$form->page:1;
         $form->limit = 10;
         $data = $form->orderAll();
